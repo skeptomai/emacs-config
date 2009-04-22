@@ -1,0 +1,30 @@
+\documentclass{<lisp>(or (muse-publishing-directive "latex-document-class")
+  "article")</lisp>}
+
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+
+\newcommand{\comment}[1]{}
+
+<lisp>(when (muse-publishing-directive "latex-block-paragraphs")
+"\\renewcommand{\\familydefault}{\\sfdefault} \\sf
+\\setlength{\\parindent}{0pt}
+\\setlength{\\parskip}{4pt}")
+</lisp>
+
+\begin{document}
+
+<lisp>(unless (muse-publishing-directive "latex-omit-title")
+(concat "\\title{" (muse-wiki-publish-pretty-title) "}
+\\author{" (muse-publishing-directive "author") "}
+\\date{" (muse-publishing-directive "date") "}
+
+\\maketitle"))
+</lisp>
+
+<lisp>(and muse-publish-generate-contents
+           "\\tableofcontents
+\\clearpage")</lisp>
