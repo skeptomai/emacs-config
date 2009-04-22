@@ -1,0 +1,10 @@
+This repository has all my Emacs config, which is loaded through a .emacs file like the following:
+
+(defvar *home-path* "/Users/cb")
+(defvar *home-elisp-path* (concat *home-path* "/lisp/elisp"))
+(defvar *init-path* (concat *home-elisp-path* "/my-elisp"))
+
+(let ((my-elisps '("baseline" "keys" "fns" "erc" "git" "java" "lisp" "muse" "org" "python" "ruby" "tramp" "xml" "erl" "cucumber")))
+  (mapcar (lambda (x) (load-file (expand-file-name (concat "my-" x ".el") *init-path*))) my-elisps))
+
+      
