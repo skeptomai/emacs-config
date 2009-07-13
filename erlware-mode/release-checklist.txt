@@ -1,0 +1,17 @@
+Get all changes into 'next'.
+
+Update version number in erlang.el.
+
+Update ChangeLog.
+
+Update AUTHORS if needed.
+
+Tag the release number in git (vx.y.z).
+
+Merge into 'master'.
+
+Push the changes to github.
+
+Upload the tar and zip files to googlecode.
+
+Deprecate the old download files.

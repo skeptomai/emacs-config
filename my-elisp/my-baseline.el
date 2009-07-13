@@ -53,14 +53,6 @@
 ;; I like ediff to split horizontally.  Default is vertically
 (setq-default ediff-split-window-function 'split-window-horizontally)
 
-;; Set elisp library load paths
-(defvar *paths* 
-  '( "/" "/slime/" "/w3m" "/nxml-mode-20041004" "/distel/"
-    "/muse/lisp" "/git" "/remember-1.9" "/cucumber" "/misc"))
-
-(mapcar (lambda (p) (add-to-list 'load-path (concat *home-elisp-path* p))) *paths*)
-
-
 ;; Set sensible defaults for my environment
 ;; including browsing of hyperspec in emacs with w3m
 ;; I've only got this set on the Mac for now 

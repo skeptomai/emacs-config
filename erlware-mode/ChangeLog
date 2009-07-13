@@ -1,0 +1,243 @@
+2009-07-02  Magnus Henoch <magnus@erlang-consulting.com>
+
+	* erlang.el (erlang-calculate-stack-indent): Combine ignored 'if' statement for 'after' with the one for 'catch', to fix indentation of try-after.
+
+2009-06-27  Dave Peticolas <dave@krondo.com>
+
+	* Ignore module name mismatch, as flymake renames the file.
+
+2009-06-11  Magnus Henoch <magnus@erlang-consulting.com>
+
+	* erlang.el (erlang-get-function-name-and-arity): Fix arity: only count "sexp" as parameter when followed by "," or ")".
+
+2009-06-08  Magnus Henoch <magnus@erlang-consulting.com>
+
+	* erlang.el (erlang-get-function-name-and-arity): New function. (erlang-mode-variables): Use it to include function arity in imenu entries.
+
+2009-05-22  Magnus Henoch <magnus@erlang-consulting.com>
+
+	* (erlang-mode-variables): Set comment-add to 0 if using new-style comments, for proper operation of M-; on regions.
+
+2009-05-18  Magnus Henoch <magnus@erlang-consulting.com>
+
+	* (erlang-mode-map): Define keymap when module is loaded.
+ 	
+	* (erlang-mode): Don't call erlang-keymap-init.
+
+	* (erlang-keymap-init, erlang-mode-commands): Remove.
+
+2009-05-08  Magnus Henoch <magnus@erlang-consulting.com>
+
+	* (inferior-erlang): Prompt for command when called with prefix argument.
+
+2009-05-14  mats cronqvist <mats.cronqvist@gmail.com>
+
+	* flymake support
+
+2009-05-04  Dave Peticolas <dave@krondo.com>
+
+	* Jim Morris's patch to make erlang.el byte-compile in 22.1 and 22.2.
+
+2009-05-04  Dave Peticolas <dave@krondo.com>
+
+	* Support tags in Emacs > 19. (ported from original mode by Jim Morris).
+
+2009-03-20  mats cronqvist <mats.cronqvist@gmail.com>
+
+	* numerous syntax highlighting fixes
+
+2009-02-19  Derek Upham <sand@blarg.net>
+
+	* run after-change-major-mode-hook in Emacs 23 and greater
+
+2009-02-18  mats cronqvist <mats.cronqvist@gmail.com>
+
+	* himBHliteral fix
+
+2009-02-16  mats cronqvist <mats.cronqvist@gmail.com>
+
+	* fixed syntax hilite
+
+2008-12-11  Dave Peticolas <dave@krondo.com>
+
+	* Fix bif/guard highlighting (Issue 25).
+
+2008-10-31  Dave Peticolas <dave@krondo.com>
+
+	* Remove cruft. Fix issue 24 (catch clause indentation).
+
+2008-10-31  Dave Peticolas <dave@krondo.com>
+
+	* Update tests.
+
+2008-05-17  Dave Peticolas <dave@krondo.com>
+
+	* Remove the arrow font lock function.
+
+2008-05-16  Dave Peticolas <dave@krondo.com>
+
+	* Erlang test file for erlware mode.
+
+2008-05-15  Dave Peticolas <dave@krondo.com>
+
+	* Remove dead code.
+
+2008-05-15  Dave Peticolas <dave@krondo.com>
+
+	* Treat $ as a character quote, not an expression prefix.
+
+2008-05-04  Dave Peticolas <dave@krondo.com>
+
+	* Automatic newline for electric comma at the end of erlang clauses.
+
+2008-04-28  Dave Peticolas <dave@krondo.com>
+
+	* New comment indenting behavior.
+
+2008-04-20  Dave Peticolas <dave@krondo.com>
+
+	* Use supervisor:start_link/0. Update docs.
+
+2008-04-12  Dave Peticolas <dave@krondo.com>
+
+	* Consistent spacing in export lines.
+
+2008-04-04  Dave Peticolas <dave@krondo.com>
+
+	* Remove unused files. The app-wizard is superseded by sinan.
+
+2008-02-03  Dave Peticolas <dave@krondo.com>
+
+	* Use newline-and-indent.
+
+2008-02-03  Dave Peticolas <dave@krondo.com>
+
+	* Turn on electric newline by default.
+
+2008-02-03  Dave Peticolas <dave@krondo.com>
+
+	* Apply separator config to section headers.
+
+2008-02-03  Dave Peticolas <dave@krondo.com>
+
+	* Consistently use 3 percent signs for section headers.
+
+2008-02-03  Dave Peticolas <dave@krondo.com>
+
+	* Consistent newline after section headers.
+
+2008-02-03  Dave Peticolas <dave@krondo.com>
+
+	* Configurable horizontal separators for function docs.
+
+2008-01-09  Dave Peticolas <dave@krondo.com>
+
+	* Add erlware.org to README.
+
+2008-01-05  Dave Peticolas <dave@krondo.com>
+
+	* Update README with erlare-man-root-dir change.
+
+2008-01-05  Dave Peticolas <dave@krondo.com>
+
+	* Rename erlang-root-dir to erlang-man-root-dir.
+
+2008-01-03  Dave Peticolas <dave@krondo.com>
+
+	* Add sinan clean function.
+
+2008-01-01  Dave Peticolas <dave@krondo.com>
+
+	* Start of sinan command support.
+
+2007-12-29  Dave Peticolas <dave@krondo.com>
+
+	* Obey user's delete-key-deletes-forward setting.
+
+2007-12-27  Dave Peticolas <dave@krondo.com>
+
+	* Update supervisor init method.
+
+2007-12-27  Dave Peticolas <dave@krondo.com>
+
+	* Distinguish between original mode and erlware mode.
+
+2007-12-27  Dave Peticolas <dave@krondo.com>
+
+	* Whitespace cleanup.
+
+2007-12-26  Martin Logan <dave@krondo.com>
+
+	* updated the init method
+
+2007-12-27  Dave Peticolas <dave@krondo.com>
+
+	* Update supervisor init method.
+
+2007-12-27  Dave Peticolas <dave@krondo.com>
+
+	* Whitespace cleanup.
+
+2007-12-26  Martin Logan <dave@krondo.com>
+
+	* updated the init method
+
+2007-12-25  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Reformat @doc sections to be consistent.
+
+2007-12-25  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Add ChangeLog to comply with EPL.
+
+2007-12-25  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Remove '.' characters from ends of @spec lines.
+
+2007-12-25  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Add @private lines to generic callback function docs.
+
+2007-12-24  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Formatting cleanup.
+
+2007-12-24  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Move header @copyright edoc lines above @doc lines.
+
+2007-12-24  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Cleanup whitespace.
+
+2007-12-24  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Add XEmacs instructions for windows section.
+
+2007-12-24  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Cleanup whitespace in emacs code.
+
+2007-12-24  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Add instructions for XEmacs.
+
+2007-12-23  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Clean up whitespace in emacs code.
+
+2007-12-16  Dave Peticolas <dave.peticolas@gmail.com>
+
+	* Clean up whitespace in emacs code.
+
+2007-12-15  Dave Peticolas <cyberlync@cyberlync-laptop.(none)>
+
+	* Remove trailing whitespace from skeleton code.
+
+2007-12-14  Martin Logan <martinjlogan@Macintosh.local>
+
+	* @doc now sits below @spec
+
+2007-11-02  Eric Merritt <cyberlync@gmail.com>
+
+	* skeleton changes

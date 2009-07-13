@@ -1,13 +1,9 @@
-;; distel / erlang
-
-;; This is needed for Erlang mode setup
 (setq erlang-root-dir "/usr/local/lib/erlang")
-(setq load-path (cons "/usr/local/lib/erlang/lib/tools-2.6.2/emacs" load-path))
 (setq exec-path (cons "/usr/local/lib/erlang/bin" exec-path))
 (require 'erlang-start)
 
 ;; This is needed for Distel setup
-(let ((distel-dir "/Users/cb/Projects/distel/elisp"))
+(let ((distel-dir "/Users/cb/lisp/elisp/distel"))
   (unless (member distel-dir load-path)
     ;; Add distel-dir to the end of load-path
     (setq load-path (append load-path (list distel-dir)))))
@@ -20,6 +16,9 @@
 	  (lambda ()
 	    ;; when starting an Erlang shell in Emacs, default in the node name
 	    (setq inferior-erlang-machine-options '("-sname" "emacs"))
+        (flymake-mode-on)
+        ;; add my exports generator
+        (local-set-key (kbd "M-]") 'erlang-exports)
 	    ;; add Erlang functions to an imenu menu
 	    (imenu-add-to-menubar "imenu")))
 
@@ -38,3 +37,4 @@
 	    ;; add some Distel bindings to the Erlang shell
 	    (dolist (spec distel-shell-keys)
 	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+
