@@ -9,10 +9,22 @@
 ;; with the -S option, dumping the abstract syntax tree
 ;; We then read that tree, looking for functions and their arity
 
+;; Version:  0.1
+;; Keywords: erlang, languages, processes
+;; Date:     2009-07-26
+
+;; The contents of this file are subject to the Erlang Public License,
+;; Version 1.1, (the "License"); you may not use this file except in
+;; compliance with the License. You should have received a copy of the
+;; Erlang Public License along with this software. If not, it can be
+;; retrieved via the world wide web at http://www.erlang.org/.
+
+;; Software distributed under the License is distributed on an "AS IS"
+;; basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See
+;; the License for the specific language governing rights and limitations
+;; under the License.
 
 ;;; Code:
-
-(eval-when-compile (require 'cl))
 
 (defvar *erlang-exports-files* (list)
   "association list of source files to their AST files")
@@ -32,7 +44,7 @@
           (let ((matched-string 
                  (concat (buffer-substring-no-properties (match-beginning 1) (match-end 1))
                          "/"
-                         (buffer-substring-no-properties (match-beginning 2) (match-end 2))))) ;;(line-beginning-position) (point))))
+                         (buffer-substring-no-properties (match-beginning 2) (match-end 2)))))
             (push matched-string exports-list))))
       (forward-line 1)
       (beginning-of-line))
@@ -57,6 +69,7 @@
 ;; load and parse "bare file name".S
 
 (defun erlang-exports ()
+  "finds all erlang functions and creates an appropriate export statement with fn name and arity"
   (interactive)
   (multiple-value-bind (source-file-directory source-bare-file)
       (source-directory-and-file (buffer-file-name))
@@ -92,39 +105,3 @@
   (let* ((source-file-directory (file-name-directory source-file-name)))
     (string-match source-file-directory (file-name-sans-extension source-file-name))
     (values source-file-directory (substring (file-name-sans-extension source-file-name) (match-end 0)))))
-
-
-;;========================================================================
-
-(defun erlang-exports-start-process (cmd args dir)
-  "Start export gathering process."
-  (let* ((process nil))
-    (condition-case err
-	(progn
-	  (when dir
-	    (let ((default-directory dir))
-	      (flymake-log 3 "starting process on dir %s" default-directory)))
-	  (setq process (apply 'start-process "erlang-exports-proc" (current-buffer) cmd args))
-	  (set-process-sentinel process 'erlang-exports-process-sentinel)
-	  (set-process-filter process 'erlang-exports-process-filter)
-          (push process erlang-exports-processes)
-
-          (setq erlang-exports-is-running t)
-          (setq erlang-exports-last-change-time nil)
-          (setq erlang-exports-check-start-time (erlang-exports-float-time))
-
-	  (flymake-report-status nil "*")
-	  (flymake-log 2 "started process %d, command=%s, dir=%s"
-		       (process-id process) (process-command process)
-                       default-directory)
-	  process)
-      (error
-       (let* ((err-str (format "Failed to launch syntax check process '%s' with args %s: %s"
-			       cmd args (error-message-string err)))
-	      (source-file-name buffer-file-name)
-	      (cleanup-f        (flymake-get-cleanup-function source-file-name)))
-	 (flymake-log 0 err-str)
-	 (funcall cleanup-f)
-	 (flymake-report-fatal-status "PROCERR" err-str))))))
-
-
