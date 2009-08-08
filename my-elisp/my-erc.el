@@ -1,6 +1,6 @@
 ;; Get nick and nickserv identify info
 (require 'cl)
-(load-file (concat *home-path* "/.ercinfo"))
+;;(load-file (concat *home-path* "/.ercinfo"))
 
 ;; ERC mode stuff
 (require 'erc)

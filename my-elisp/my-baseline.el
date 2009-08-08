@@ -29,7 +29,7 @@
 (winner-mode t)
 
 ;; line numbering when I want it
-(require 'linum)
+;;(require 'linum)
 
 ;; better navigation
 (ido-mode t)
@@ -77,15 +77,15 @@
 
 ;; startup sequence for when we've got a window system
 ;; on linux and want to start gnuserv
-(when (and 
-       (not (eq window-system nil))
-       (eq system-type 'gnu/linux))
-  (progn
-    ;; start gnuserv, so apps can talk to us (e.g. p4, browsers)
-    (ignore-errors
-      (require 'gnuserv)
-      (setq gnuserv-frame (selected-frame))
-      (gnuserv-start))))
+;; (when (and 
+;;        (not (eq window-system nil))
+;;        (eq system-type 'gnu/linux))
+;;   (progn
+;;     ;; start gnuserv, so apps can talk to us (e.g. p4, browsers)
+;;     (ignore-errors
+;;       (require 'gnuserv)
+;;       (setq gnuserv-frame (selected-frame))
+;;       (gnuserv-start))))
 
 (type-break-mode) ;; get me to stop working once in a while
 
