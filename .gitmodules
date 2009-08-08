@@ -1,3 +1,0 @@
-[submodule "./slime"]
-	path = ./slime
-	url = git@github.com:skeptomai/slime.git
