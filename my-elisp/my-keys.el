@@ -7,6 +7,7 @@
 (global-set-key "\C-cb" 'end-of-buffer)
 (global-set-key "\C-ct" 'beginning-of-buffer)
 (global-set-key "\C-cg" 'goto-line)
+(global-set-key "\C-ck" 'kill-buffer)
 (global-set-key "\C-cc" 'save-buffers-kill-emacs)
 (global-set-key "\C-cf" 'ido-find-file)
 (global-set-key "\C-ce" 'fc-eval-and-replace)
