@@ -74,6 +74,11 @@
     (add-default (cons 'width 82))
     (add-default (cons 'height 48))))
 
+(when (and (eq system-type 'gnu/linux) (locate-library "color-theme"))
+  (progn
+    (require 'color-theme)
+    (color-theme-billw)))
+
 (server-start) ;; startup emacsclient support
 
 (type-break-mode) ;; get me to stop working once in a while
