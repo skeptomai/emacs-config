@@ -1,5 +1,5 @@
 ;; This repository has all my Emacs config, which is loaded through a .emacs file like the following:
 
-(defvar *home-path* "/home/cb")
+(defvar *home-path* (file-name-as-directory "/home/cb"))
 (defvar *home-elisp-path* (concat *home-path* "/Projects/emacs-config"))
 (load-file (expand-file-name "subdirs.el" *home-elisp-path*))
