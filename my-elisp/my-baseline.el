@@ -7,7 +7,7 @@
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (when (fboundp 'show-paren-mode) (show-paren-mode t))
-(when (fboundp 'tabbar-mode) (tabbar-mode t))
+(when (fboundp 'tabbar-mode) (tabbar-mode nil))
 
 ;; Syntax colouring, show line and column numbers in status bar
 (setq-default global-font-lock-mode t)
