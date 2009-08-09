@@ -81,6 +81,9 @@
 
 (server-start) ;; startup emacsclient support
 
+
+(ansi-term "bash" "localhost") ;; start a shell
+
 (type-break-mode) ;; get me to stop working once in a while
 
 (fset 'yes-or-no-p 'y-or-n-p) ;; answer 'y' instead of 'yes'
