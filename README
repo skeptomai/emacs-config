@@ -1,18 +1,5 @@
-;; This repository has all my Emacs config, 
-;; My .emacs file resembles the following:
+;; This repository has all my Emacs config, which is loaded through a .emacs file like the following:
 
 (defvar *home-path* "/home/cb")
 (defvar *home-elisp-path* (concat *home-path* "/Projects/emacs-config"))
-(defvar *init-path* (concat *home-elisp-path* "/my-elisp"))
-
-(dolist (elisp-dir (directory-files *home-elisp-path*))
-  (let ((full-dir-name (expand-file-name elisp-dir *home-elisp-path*)))
-    (when (file-directory-p full-dir-name)
-      (setq load-path (cons full-dir-name load-path)))))
-
-(let ((my-elisps '("baseline" "keys" "fns" "erc" "git" "java" "lisp" "org" "python" "ruby" "tramp" "xml" "erlware" "cucumber")))
-  (mapcar (lambda (x) (load-file (expand-file-name (concat "my-" x ".el") *init-path*))) my-elisps))
-
-      
-
-      
+(load-file (expand-file-name "subdirs.el" *home-elisp-path*))
