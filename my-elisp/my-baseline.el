@@ -29,7 +29,8 @@
 (winner-mode t)
 
 ;; line numbering when I want it
-;;(require 'linum)
+(if (locate-library "linum")
+    (require 'linum))
 
 ;; better navigation
 (ido-mode t)

@@ -1,6 +1,9 @@
 ;; Get nick and nickserv identify info
 (require 'cl)
-;;(load-file (concat *home-path* "/.ercinfo"))
+
+(let ((ercinfo (concat *home-path* "/.ercinfo")))
+  (if (file-exists-p ercinfo)
+       (load-file ercinfo)))
 
 ;; ERC mode stuff
 (require 'erc)
