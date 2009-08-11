@@ -1,3 +1,5 @@
+(require 'cl)
+
 ;; Remove splash screen
 (setq inhibit-splash-screen t)
 
