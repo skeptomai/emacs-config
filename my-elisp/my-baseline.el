@@ -1,6 +1,13 @@
 ;; Remove splash screen
 (setq inhibit-splash-screen t)
 
+;; Install color theme if it's here
+
+(ignore-errors
+  (require 'color-theme)
+  (color-theme-initialize)
+  (color-theme-billw))
+
 ;; Check for {tool,menu,scroll}-bars and get rid of them
 ;; all this functionality is on the keyboard
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
