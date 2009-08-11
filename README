@@ -1,3 +1,5 @@
+;; -*- Emacs-Lisp -*-
+
 ;; This repository has all my Emacs config, which is loaded through a .emacs file like the following:
 
 (let ((homedir-by-system-type
@@ -11,3 +13,7 @@
   (defvar *home-path* (file-name-as-directory homedir-by-system-type))
   (defvar *home-elisp-path* (concat *home-path* "/Projects/emacs-config"))
   (load-file (expand-file-name "subdirs.el" *home-elisp-path*)))
+
+
+;; You should just change the home directory and/or elisp paths above 
+;; and save this into your .emacs
