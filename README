@@ -16,4 +16,4 @@
 
 
 ;; You should just change the home directory and/or elisp paths above 
-;; and save this into your .emacs
+;; and save this into your .emacs or Aquamacs Preferences.el on Mac OS X
