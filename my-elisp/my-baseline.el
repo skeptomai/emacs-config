@@ -4,11 +4,19 @@
 (setq inhibit-splash-screen t)
 
 ;; Install color theme if it's here
-
 (ignore-errors
   (require 'color-theme)
   (color-theme-initialize)
-  (color-theme-billw))
+  (color-theme-fischmeister))
+
+;; turn off prompting at exit
+(if (fboundp 'aquamacs-save-buffers-kill-emacs)
+    (defadvice aquamacs-save-buffers-kill-emacs (around no-query-kill-emacs activate)
+      "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+      (flet ((process-list ())) ad-do-it))
+    (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+      "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+      (flet ((process-list ())) ad-do-it)))
 
 ;; Check for {tool,menu,scroll}-bars and get rid of them
 ;; all this functionality is on the keyboard
@@ -83,13 +91,7 @@
     (add-default (cons 'width 82))
     (add-default (cons 'height 48))))
 
-(when (and (eq system-type 'gnu/linux) (locate-library "color-theme"))
-  (progn
-    (require 'color-theme)
-    (color-theme-billw)))
-
 (server-start) ;; startup emacsclient support
-
 
 (ansi-term "bash" "localhost") ;; start a shell
 

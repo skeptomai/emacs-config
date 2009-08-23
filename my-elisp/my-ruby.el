@@ -28,6 +28,6 @@
              (ruby-electric-mode))))
 
 
-(require 'yaml-mode)
+(autoload 'yaml-mode "yaml-mode" "yaml mode" t)
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 

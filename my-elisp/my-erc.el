@@ -6,23 +6,25 @@
        (load-file ercinfo)))
 
 ;; ERC mode stuff
-(require 'erc)
-
-(add-hook 'erc-after-connect
-          '(lambda (SERVER NICK)
-            (cond
-              ((string-match "freenode\\.net" SERVER)
-               (erc-message "PRIVMSG" (concat "Nickserv identify " erc-nick-id))))))
-
-(require 'erc-join)
-(erc-autojoin-mode 1)
+(autoload 'erc "erc" "IRC in Emacs" t nil)
+(autoload 'erc-autojoin-mode "erc-join" "ERC autojoin" t nil)
                               
 (defun irc-maybe ()
   "Connect to IRC."
   (interactive)
   (when (y-or-n-p "IRC? ")
-    (erc :server erc-server :port erc-port
-         :nick erc-nick :full-name erc-user-full-name)))
+    (progn
+      (add-hook 'erc-after-connect
+                '(lambda (SERVER NICK)
+                  (cond
+                    ((string-match "freenode\\.net" SERVER)
+                     (erc-message "PRIVMSG" (concat "Nickserv identify " erc-nick-id))))))
+      
+      (erc-autojoin-mode 1)
+      
+      (erc :server erc-server :port erc-port
+           :nick erc-nick :full-name erc-user-full-name))))
+
 ;;; Notify me when a keyword is matched (someone wants to reach me)
 
 (defvar my-erc-page-message "-m %s says \"%s\""
