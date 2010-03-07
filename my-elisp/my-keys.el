@@ -1,3 +1,10 @@
+;;
+;; Global key settings
+;; This feels wrong and artificial, because it cuts across all modes and libraries
+;; which may or may not be installed.  Nonetheless, it makes finding all those
+;; weird bindings easier when debugging [skeptomai]
+;;
+
 (global-set-key "\M-," 'point-to-top)
 (global-set-key "\C-x," 'tags-loop-continue)
 (global-set-key "\M-." 'point-to-bottom)
@@ -28,3 +35,5 @@
 (global-set-key "\C-x\C-p" 'other-window-backward)
 (global-set-key "\C-x\C-n" 'other-window)
 (global-set-key (quote [f6]) 'toggle-writeroom)
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+(global-set-key (kbd "M-RET") 'ns-toggle-fullscreen)

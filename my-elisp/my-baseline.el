@@ -49,10 +49,14 @@
 (setq-default global-font-lock-mode t)
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
+(setq-default show-paren-mode t)
 (setq-default desktop-save-mode t)
 (setq-default desktop-save t)
 (setq-default default-left-fringe-width 0
               default-right-fringe-width 0)
+
+;; Enable recent file tracking & opening
+(recentf-mode t)
 
 ;; Get rid of old buffers on schedule
 (setq-default midnight-mode t)
@@ -74,11 +78,11 @@
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
+;; Command completion in the mini-buffer
+(icomplete-mode t)
+
 ;; better buffer management
 (iswitchb-mode t)
-
-;; better buffer menu
-(autoload 'ibuffer "ibuffer" "List buffers" t)
 
 ;; Make lines wrap automagically in text mode
 (add-hook 'text-mode-hook 'text-mode-hook-identify)
