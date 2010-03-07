@@ -78,8 +78,6 @@
 (autoload 'erlang-find-tag-other-window "erlang"
   "Like `find-tag-other-window'.  Capable of retreiving Erlang modules.")
 
-(autoload 'erlang-exports "erlang-exports"
-  "Gathers a module's exports and puts them in the source")
 
 ;;
 ;; Associate files extensions ".erl" and ".hrl" with Erlang mode.

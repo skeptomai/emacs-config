@@ -10,6 +10,7 @@
 (global-set-key "\C-ck" 'kill-buffer)
 (global-set-key "\C-cc" 'save-buffers-kill-emacs)
 (global-set-key "\C-cf" 'ido-find-file)
+(global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-ce" 'fc-eval-and-replace)
 (global-set-key (quote [f12]) 'slime-selector)
 (global-set-key "\C-cd" 'toggle-selective-display)
@@ -26,3 +27,4 @@
 (global-set-key "\C-x\C-g" 'goto-line)
 (global-set-key "\C-x\C-p" 'other-window-backward)
 (global-set-key "\C-x\C-n" 'other-window)
+(global-set-key (quote [f6]) 'toggle-writeroom)

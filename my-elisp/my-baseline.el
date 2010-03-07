@@ -7,7 +7,26 @@
 (ignore-errors
   (require 'color-theme)
   (color-theme-initialize)
-  (color-theme-fischmeister))
+  (color-theme-clarity))
+
+(defun unwriteroom ()
+  (aquamacs-toggle-full-frame)
+  (modify-frame-parameters (selected-frame) `((alpha . 100)))
+  (set-window-margins nil 0 0)
+  t)
+
+(defun writeroom ()
+  (modify-frame-parameters nil (list (cons 'fullscreen 'fullboth)))
+  (set-window-margins nil 10 40)
+  (set-frame-parameter (selected-frame) 'font "-apple-constantia-medium-i-normal--0-0-0-0-m-0-iso10646-1")
+  (modify-frame-parameters (selected-frame) `((alpha . 65)))
+  t)
+
+(defun toggle-writeroom ()
+  (interactive)
+  (or 
+   (and (frame-parameter nil 'fullscreen) (< (cdr (assoc 'alpha (frame-parameters))) 100) (unwriteroom))
+   (writeroom)))
 
 ;; turn off prompting at exit
 (if (fboundp 'aquamacs-save-buffers-kill-emacs)
@@ -32,6 +51,8 @@
 (setq-default column-number-mode t)
 (setq-default desktop-save-mode t)
 (setq-default desktop-save t)
+(setq-default default-left-fringe-width 0
+              default-right-fringe-width 0)
 
 ;; Get rid of old buffers on schedule
 (setq-default midnight-mode t)
@@ -55,6 +76,9 @@
 
 ;; better buffer management
 (iswitchb-mode t)
+
+;; better buffer menu
+(autoload 'ibuffer "ibuffer" "List buffers" t)
 
 ;; Make lines wrap automagically in text mode
 (add-hook 'text-mode-hook 'text-mode-hook-identify)
