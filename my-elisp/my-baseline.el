@@ -49,7 +49,6 @@
 (setq-default global-font-lock-mode t)
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
-(setq-default show-paren-mode t)
 (setq-default desktop-save-mode t)
 (setq-default desktop-save t)
 (setq-default default-left-fringe-width 0
@@ -125,3 +124,6 @@
 
 ;; narrow-to-region is normally disabled.  I enable it
 (put 'narrow-to-region 'disabled nil)
+
+;; I have gpg installed here, and epa/epg are available
+(when (boundp 'epg-gpg-program) (setq epg-gpg-program "/usr/local/bin/gpg"))
