@@ -1,5 +1,7 @@
 (require 'cl)
 
+(set-default-font "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+
 ;; Remove splash screen
 (setq inhibit-splash-screen t)
 
