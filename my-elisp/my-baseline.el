@@ -70,10 +70,6 @@
 ;; better window management
 (winner-mode t)
 
-;; line numbering when I want it
-(if (locate-library "linum")
-    (require 'linum))
-
 ;; better navigation
 (ido-mode t)
 (setq ido-enable-flex-matching t)
@@ -127,5 +123,5 @@
 
 (fset 'yes-or-no-p 'y-or-n-p) ;; answer 'y' instead of 'yes'
 
-;; miscellaneous junk
+;; narrow-to-region is normally disabled.  I enable it
 (put 'narrow-to-region 'disabled nil)
