@@ -36,4 +36,4 @@
 (global-set-key "\C-x\C-n" 'other-window)
 (global-set-key (quote [f6]) 'toggle-writeroom)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
-(global-set-key (kbd "M-RET") 'ns-toggle-fullscreen)
+(global-set-key (kbd "<s-return>") 'ns-toggle-fullscreen)
