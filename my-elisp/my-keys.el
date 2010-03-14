@@ -22,6 +22,7 @@
 (global-set-key (quote [f12]) 'slime-selector)
 (global-set-key "\C-cd" 'toggle-selective-display)
 (global-set-key "\C-w" 'backward-kill-word)
+(global-set-key (kbd "<s-backspace>") 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\M-r" 'isearch-backward-regexp)
 (global-set-key "\M-s" 'isearch-forward-regexp)
