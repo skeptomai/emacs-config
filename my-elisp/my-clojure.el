@@ -8,8 +8,6 @@
       swank-clojure-extra-classpaths (list
 				      (concat *home-elisp-path* "/my-elisp/swank-clojure/src/main/clojure")))
 
-(require 'swank-clojure-autoload)
-
 ;; slime
 (eval-after-load "slime"
   '(progn (slime-setup '(slime-repl))))
