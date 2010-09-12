@@ -1,0 +1,15 @@
+---
+in:  |a|b|c|\n|1|2|3|
+out: <table>\n<tr>\n<td>a</td>\n<td>b</td>\n<td>c</td>\n</tr>\n<tr>\n<td>1</td>\n<td>2</td>\n<td>3</td>\n</tr>\n</table>
+---
+in:  table.. |_. a|_. b|_. c|\n|1|2|3|
+out: <table>\n<tr>\n<th>a</th>\n<th>b</th>\n<th>c</th>\n</tr>\n<tr>\n<td>1</td>\n<td>2</td>\n<td>3</td>\n</tr>\n</table>
+---
+in:  table.. _|a|b|c|\n|1|2|3|
+out: <table>\n<tr>\n<th>a</th>\n<th>b</th>\n<th>c</th>\n</tr>\n<tr>\n<td>1</td>\n<td>2</td>\n<td>3</td>\n</tr>\n</table>
+---
+in:  table(fig). {color:red}_|Top|Row|\n{color:blue}|/2. Second|Row|\n|_{color:green}. Last|
+out: <table class="fig">\n<tr style="color:red;">\n<th>Top</th>\n<th>Row</th>\n</tr>\n<tr style="color:blue;">\n<td rowspan="2">Second</td>\n<td>Row</td>\n</tr>\n<tr>\n<th style="color:green;">Last</th>\n</tr>\n</table>
+---
+in:  table(tbl1). (head)|_. column 1 |_.      column 2 |_>.     column 3 |\n                   |   1        |        2        |(test).        3 |\n                                      |   4        |(#foo). 5        |               6 |\n                                                         |   7        |        8        |(test#bar).    9 |
+out: <table class="tbl1">\n<tr class="head">\n<th>column 1</th>\n<th>column 2</th>\n<th align="right">column 3</th>\n</tr>\n<tr>\n<td>1</td>\n<td>2</td>\n<td align="right" class="test">3</td>\n</tr>\n<tr>\n<td>4</td>\n<td id="foo">5</td>\n<td align="right">6</td>\n</tr>\n<tr>\n<td>7</td>\n<td>8</td>\n<td align="right" class="test" id="bar">9</td>\n</tr>\n</table>

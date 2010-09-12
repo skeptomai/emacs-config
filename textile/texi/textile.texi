@@ -1,0 +1,441 @@
+\input texinfo
+@comment $Id: textile.texi,v 1.5 2004-09-03 14:07:07 csebold Exp $
+@comment %**start of header
+@setfilename textile
+@settitle Textile.el Manual
+@syncodeindex pg cp
+@comment %**end of header
+@footnotestyle end
+
+@dircategory Emacs
+@direntry
+* Textile: (textile).   Textile, a humane web text generator for Emacs.
+@end direntry
+
+@tex
+@titlepage
+@title Textile.el
+@author Charles Sebold (@email{csebold@@livingtorah.org})
+@page
+@vskip 0pt plus 1filll
+
+This manual is for textile.el v1.0
+which is an implementation of Textile and MT-Textile in Emacs Lisp.
+
+@quotation
+This manual is considered free software; you can redistribute it
+and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public
+License along with GNU Emacs; if not, write to the Free
+Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+MA 02111-1307, USA.
+
+Latest version should be available at:
+   @uref{http://www.livingtorah.org/~csebold/emacs/textile/}
+@end quotation
+
+Copyright @copyright{} 2004 Charles Sebold @email{csebold@@livingtorah.org}
+@end titlepage
+
+@contents
+@end tex
+
+@ifnottex
+@node Top, Why, (dir), (dir)
+@top Textile
+@end ifnottex
+
+This manual is for textile.el v1.0, which is an implementation of
+Textile and MT-Textile in Emacs Lisp.  Textile is described by its
+creator as a ``Humane Web Text Generator,'' which means that a person
+can learn a few simple rules and markup a text document which will
+then be transformed into @acronym{XHTML} that is valid,
+typographically competent, and visually as pleasing to the eye as
+modern style sheets and browsers will allow.
+
+@quotation
+This manual is considered free software; you can redistribute it
+and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public
+License along with GNU Emacs; if not, write to the Free
+Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+MA 02111-1307, USA.
+
+Latest version should be available at:
+   @uref{http://www.livingtorah.org/~csebold/emacs/textile/}
+@end quotation
+
+Copyright @copyright{} 2004 Charles Sebold @email{csebold@@livingtorah.org}
+
+@menu
+* Why::                         Why use Textile?  Why Textile for Emacs?
+* Using textile::               How does one use textile.el in Emacs?
+* Textile Formatting::          An implementation-independent guide to markup
+* Extending Textile::           How to create your own macros and markup
+* Index::                       
+
+@detailmenu
+ --- The Detailed Node Listing ---
+
+Why
+
+* Why Textile::                 What is the point of an intermediate markup?
+* Why Textile for Emacs::       Why would somebody want this client-side?
+
+Using textile
+
+* Newlines::                    How Textile handles newline characters
+* Bug Reports::                 Where to send bug reports for textile.el
+
+@end detailmenu
+@end menu
+
+@node Why, Using textile, Top, Top
+@chapter Why
+
+@cindex why
+
+@menu
+* Why Textile::                 What is the point of an intermediate markup?
+* Why Textile for Emacs::       Why would somebody want this client-side?
+@end menu
+
+@node Why Textile, Why Textile for Emacs, Why, Why
+@section Why Textile
+
+@cindex valid
+@cindex smart quotes
+@cindex CMS
+
+This will explain why a person would want to use Textile, and why I
+implemented Textile in Emacs Lisp.  This will also include some of the
+history of the markup standard.
+
+Textile is described by its creator as a ``Humane Web Text
+Generator,''@footnote{@uref{http://www.textism.com/article/648/textile}}
+which means that a person can learn a few simple rules and markup a
+text document which will then be transformed into @acronym{XHTML} that
+is valid, typographically competent, and visually as pleasing to the
+eye as modern style sheets and browsers will allow.
+
+I believe that Dean Allen described Textile as ``humane'' because the
+process of creating valid, pleasing XHTML has usually been a fairly
+unhappy one.  The average @acronym{HTML} author doesn't even write his
+or her own code; they tend to use @acronym{WYSIWYG} tools to produce
+HTML.  Most of those tools do not produce (X)HTML that conforms to the
+@acronym{W3C} standard, much less the @acronym{SGML} or @acronym{XML}
+standards.  The authors who know some HTML usually don't make sure
+that they are outputting valid HTML, which means that the elements of
+the page may not be rendered as expected, since browsers then have to
+guess at what the HTML author meant to do.  Having to process invalid
+HTML is referred to by many as ``tag soup,'' since once cannot be sure
+that there is a valid structure at all when one element fails.
+
+If you are a text-oriented person, you may have simply wanted to be
+able to write what you wanted, and then apply a few layout or
+typographical changes to make the result more correct or more
+aesthetically pleasing.  But let's say I wanted to write a paragraph
+which was not tied to the left (the usual default) but floated to the
+right, padded on the left by
+2em@footnote{an @code{em} space is the width of a capital ``M''}, and
+with other changes applied by the @acronym{CSS} class ``mypar.''  In
+XHTML I would have to do it this way:
+
+@example
+<p style="float: right; padding-left: 2em;" class="mypar">How can
+anybody remember all those different tags, and what they represent?
+Is it even possible?</p>
+@end example
+
+Note the things I have to remember:  I have to enclose the paragraph
+in @code{<p>} tags, I have to insert manual CSS commands to float the
+paragraph and pad it (but only on the left, not everywhere), and I
+have to determine the class.
+
+Imagine if you knew a simpler syntax, in which blocks are defined by
+code whenever you start them, and you don't have to remember to flank
+them on both sides.  You have a few simple rules, like ``things in
+parentheses are classes and IDs.''  The Textile code below produces
+the XHTML code you saw above:
+
+@example
+p((>(mypar). How can anybody remember all those different tags, and
+what they represent?  Is it even possible?
+@end example
+
+Here is a better example.  Would you rather do this when you want to
+link to an image:
+
+@example
+<img src="/images/screenshot.jpg" width="640" height="480" />
+@end example
+
+@dots{}or this:
+
+@example
+!/images/screenshot.jpg 640x480!
+@end example
+
+More importantly for some, do you know the difference between smart
+quotes and --- well, uneducated quotes?  Do you know how to turn
+dashes into em-dashes and en-dashes?  Usually you have to have a
+Unicode table nearby to input the proper Unicode entities so that
+browsers will display these symbols uniformly, and you have to
+painstakingly go through all your code to change @code{"quote"} to
+@code{&#8220;quote&#8221;} and then everything just looks like a big
+mess when you're done.  Textile can do this for you,
+semi-intelligently.  Most people would have difficulty when faced with
+the choice of concentrating on writing versus concentrating on valid
+markup.  Textile may free you from markup so you can focus on writing
+intelligently.  And that, I'm sure you'll agree, would make the web a
+much better place.
+
+Originally Dean Allen wrote Textile as a markup for use in his
+@acronym{CMS} called ``Textpattern.''  Additionally he put up a page
+where you could see what the markup
+did@footnote{@uref{http://www.textism.com/tools/textile/}}, and people
+started trying it out.  Previously most text-to-HTML tools used a Wiki
+syntax which was handy but not full-featured enough, or just a simple
+algorithm to attempt to break paragraphs up in @code{<p>} tags.
+Again, you can see why Dean considered this to be ``humane,'' compared
+to what was out there.
+
+The popularity of Textile seemed to explode after Brad Choate ported
+Dean's PHP code to Perl and released it as a
+plug-in@footnote{@uref{http://bradchoate.com/mt/docs/mtmanual_textile2.html}}
+for Movable Type, a non-free but very popular CMS also written in
+Perl.  Soon afterward, Brad cooperated with Dean to extend the format
+to include more tags, more XHTML support, and stranger markup
+situations.  Brad then relied on another piece of software,
+SmartyPants by John
+Gruber@footnote{@uref{http://daringfireball.net/projects/smartypants/}},
+to ``educate'' the quotes and punctuation.
+
+In the months that followed, Brad's code was ported back to PHP by
+others wishing to use it with free CMS's, and nearly every free or
+open-source server-side web text processor had or would soon get a
+Textile-to-XHTML generator.
+
+And soon after that, I decided that I wanted to author HTML in Textile
+but not use a server-side CMS to serve it.
+
+@node Why Textile for Emacs,  , Why Textile, Why
+@section Why Textile for Emacs
+
+Here is my short list of reasons for reverse-engineering Textile in
+Emacs:
+
+@itemize @bullet
+@item
+Because everything should be able to run under Emacs
+@item
+Because I don't want to edit text using the @code{<textarea>} form
+fields in a web browser; I have a perfectly good text editor already
+@item
+Because sometimes I can't install Textile on somebody else's CMS, but
+I can always install Textile on my copy of Emacs
+@item
+Because I wanted to take on a bigger project in Emacs Lisp than I ever
+had before, and I needed the release during a stressful time in my
+life; who has fun coding in C anyway?  And somebody far more competent
+than I@footnote{@uref{http://diveintomark.org/projects/pytextile/}}
+already ported it to Python.
+@item
+Because it keeps making me consider writing an entire CMS in Emacs
+Lisp, which I will never do but which keeps me awake some nights
+thinking about how easy it would be with tramp and ange-ftp in the
+shape they're in
+@item
+Because I couldn't think of a better way to really learn XHTML
+@item
+Because I have an evil idea, which is to add this to Message mode in
+Gnus and be able to send well-formatted HTML email, something which is
+actually useful once in a great while
+@item
+Because I have a side project coming in which I convert BetaCode (an
+ancient Greek @acronym{ASCII} encoding) to Unicode entities on the
+fly, and already having this in place makes that a lot easier
+@end itemize
+
+@node Using textile, Textile Formatting, Why, Top
+@chapter Using textile
+
+@cindex using
+
+To use textile.el, put this file into your load path, and put the
+following into your @file{.emacs} file:
+
+@lisp
+(require 'textile)
+@end lisp
+
+At this time Textile markup is only documented at
+@uref{http://www.textism.com/tools/textile/} and
+@uref{http://bradchoate.com/mt/docs/mtmanual_textile2.html}, so to
+understand how to write Textile code, for now you should check those
+web sites.  In the future this manual will detail the format that
+comes with textile.el.
+
+In a buffer with Textile markup, you can run:
+
+@example
+@kbd{M-x textile-buffer @key{RET}}
+@end example
+
+and have the entire buffer processed by Textile, which (by default)
+will create a new buffer with valid XHTML markup in it.  If you want
+the returned XHTML in the same buffer as the old code, you can change
+@code{textile-output-to-new-buffer} to @code{nil} (it defaults to
+@code{t}).  You can also call @code{textile-region} in similar
+fashion.  If you want to use textile.el in your own Emacs Lisp
+programs, you can pass a string to @code{textile-string} and it will
+return XHTML in another string.
+
+@menu
+* Newlines::                    How Textile handles newline characters
+* Bug Reports::                 Where to send bug reports for textile.el
+@end menu
+
+@node Newlines, Bug Reports, Using textile, Using textile
+@section Newlines
+
+@cindex newline
+@cindex carriage return
+@cindex cr
+@cindex br
+
+Standard Textile behavior is to treat newlines in the middle of a
+block (like a paragraph) as intentional newlines, and it replaces them
+with @code{<br />} when it sees them.  To change this behavior so that
+you can edit Textile text with @code{auto-fill-mode} on, you can
+either load @file{longlines.el} (found elsewhere) or you can put the
+following into your @file{.emacs} file:
+
+@lisp
+(setq textile-br-all-newlines nil)
+@end lisp
+
+This will change @code{textile-br-all-newlines} to @code{nil} (it
+defaults to @code{t}).
+
+For example, if we start with the following Textile markup:
+
+@example
+bq. The rain in Spain
+Falls mainly
+On the plain.
+@end example
+
+With @code{textile-br-all-newlines} set to the default @code{t}, we
+see this output:
+
+@example
+<blockquote><p>The rain in Spain<br />
+Falls mainly<br />
+On the plain.</p></blockquote>
+@end example
+
+Since this paragraph is actually a sort of poetic doggerel, it is
+appropriate to break the lines there.  If we have it set to
+@code{nil}, the result is this:
+
+@example
+<blockquote><p>The rain in Spain
+Falls mainly
+On the plain.</p></blockquote>
+@end example
+
+This doesn't look so bad in HTML, but now imagine how your web browser
+will parse and display this:
+
+@display
+The rain in Spain Falls mainly On the plain.
+@end display
+
+Notice that this looks like a normal quotation, and the capitalization
+is very weird because ``Falls'' and ``On'' are in the middle of the
+ordinary sentence.  If this is what you wanted, then that's fine, but
+it might surprise you sometimes.
+
+If you have @code{textile-br-all-newlines} set to @code{nil} but we
+still want line breaks, we have to put them in manually:
+
+@example
+bq. The rain in Spain<br />
+Falls mainly<br />
+On the plain.
+@end example
+
+This produces the desired effect, but now you are mixing Textile and
+HTML and that can be a dangerous combination.  There is no guarantee
+that some future revision of Textile might not decide to convert your
+raw @code{<br />} tags to entities, and you may end up with a literal
+``<br />'' in your finished output.  Then you would have to escape it
+by surrounding it with @code{==} to be sure that it works:
+
+@example
+bq. The rain in Spain ==<br />==
+Falls mainly ==<br />==
+On the plain.
+@end example
+
+The extra space before the @code{==}, which won't be visible in your
+output in all likelihood, is to guarantee that Textile recognizes the
+@code{==} as an inline escape; otherwise it might think that you are
+doing math.  As you can see, this is getting fairly ugly.  It is much
+easier to just take the default.
+
+In short, it is hard to guarantee that textile.el will always do the
+right thing if you change @code{textile-br-all-newlines}, and you may
+find it difficult in some cases to enter a manual linebreak unless you
+escape it with @code{==}; the best thing to do is either edit without
+@code{auto-fill-mode} or use longlines, but I will try to keep
+@code{textile-br-all-newlines} working as expected when possible
+(because I like @code{auto-fill-mode}).
+
+@node Bug Reports,  , Newlines, Using textile
+@section Bug Reports
+
+@cindex bugs
+
+Do NOT send bug reports on textile.el to Dean Allen or Brad Choate;
+they had nothing to do with the Emacs implementation.  Send bug
+reports to @email{textile-bug@@livingtorah.org}, preferably along with
+sample text and some description of what you expected to see.
+
+@node Textile Formatting, Extending Textile, Using textile, Top
+@chapter Textile Formatting
+
+@cindex formatting
+@cindex markup
+
+This will describe how to use Textile markup in your document.
+
+@node Extending Textile, Index, Textile Formatting, Top
+@chapter Extending Textile
+
+This will explain how to customize your @file{.emacs} file to extend
+Textile markup for your own needs.
+
+@node Index,  , Extending Textile, Top
+@unnumbered Index
+
+@printindex cp
+
+@bye

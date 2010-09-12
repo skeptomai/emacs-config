@@ -1,0 +1,183 @@
+==
+<!-- $Id: textile.txt,v 1.5 2004-09-15 21:02:31 csebold Exp $ -->
+==
+
+p((<>[11](my_class). This is a Textile test.
+
+h1. This is a first-level header.
+
+(list1)#(#listid1) This is the first entry in my ordered list[1].
+#(listclass2) This is the second.
+
+# This should be the first entry in a new ordered list.
+# This should be the second.
+(#unordered)** The third entry is a nested list.
+** See how I just mix and match lists?
+**{color: red} This is supposed to be a v2 feature.
+# And this should be the third.
+
+* This is a single-item unordered list.
+
+* What if a list
+* of some length
+* has a line
+which starts with no list item tag
+* and yet finishes with one?
+
+h2. Textile lisp evaluation:
+
+This is #[((textile-version t))]# running on #[((car (textile-split-string (emacs-version) "\n")))]# if you were curious.
+
+What about @#@@[((textile-version t))]#@?
+
+h2. Textile smart quotes tests:
+
+""This is a link.":http://www.livingtorah.org"
+
+This is a ".emacs" file.
+
+Blocks that "end in quotes seem to work right."
+
+"'He said,' she said, 'that quotes within quotes are fairly common.'"
+
+"'"And what," he said,' she said, 'about when he said, "about what she said?"'"
+
+She paused, "...I don't think I understand."
+
+What if we have quotes darting in and out of inline tags?  _Custer_'s last stand?  What about _Custer's_ last stand?
+
+"_Groovy._"
+
+Don't look now, but here come the '80s.
+
+h2. Textile v1 image tests:
+
+!http://www.livingtorah.org/images/a.gif!
+
+Here is !http://www.livingtorah.org/images/a.gif (an inline image)! to see if that works.
+
+And finally, here is !http://a.com/b.gif (a normal image)! and !http://a.com/c.gif (a linked image)!:ltm which is linked to an alias, no less.
+
+h2. Textile v2 image tests:
+
+!http://a.com/b.gif 30x40!
+
+!http://a.com/b.gif 30w 40h!
+
+!)>http://a.com/b.gif!
+
+!{border: 0px}http://a.com/b.gif 30x40 (with a title)!
+
+!{border: 0px}http://a.com/b.gif 30x40 (with a title)!:ltm
+
+Can an _image be !http://a.com/b.gif (surrounded by tags)! without_ breaking?
+
+h2. Textile link tests:
+
+See http://www.livingtorah.org for a normal inline link without any special text.
+
+OK, "here is a link":http://www.livingtorah.org to my website.
+
+"Here is a link":http://www.livingtorah.org, and "here's another":http://www.livingtorah.org.
+
+Let's try aliases: "here":ltm is the ministry link, and "here":ltj is the journal.
+
+And then "a normal link (Sun)":http://www.sun.com to Sun's website.
+
+And a "link including an ampersand":http://www.example.com/cgi-bin/test?a=b&c=d, which would also be a good way to see if the URL-finding code knows where to stop.
+
+We alternate between TLA(Three Letter Acronym) and TLA in this paragraph.
+
+Will thís be cônverted to Unicode, or at least entities?
+
+Here are the inline tests: We have a *strong* and an _emphasized,_ a **bold,** an __italics,__ a ++bigger,++ a --smaller,-- something -deleted,- something +inserted,+ some ^superscript,^ some ~subscript,~ a %{color: red}red span,% and @some code, including something like 2>&1 and _non-emphasized text_.@  And here's some ==*escaped text*== just to see what happens.  Here's some ??cited text?? also.
+
+Now, strong*things*embedded shouldn't work, but strong[*things embedded in braces*]should work.
+
+What about _emphasized text with some *strong* text within it?_
+
+*_And what about something right at the beginning of a line?_*  Hm, what about that?  This isn't a list item, is it?
+
+And let's not forget that we should be able to _(emphasize things in parentheses without it trying to turn that into a style)._
+
+p)>. This should be a paragraph, floated right and padded on the right by 1 em.
+
+bq. This is a blockquote.
+I am going to cut it into small lines
+With their own line breaks.
+
+clear.
+
+dl. term:definition
+block:not usually something like this,
+and here's a line break to make things really interesting
+term with spaces:the definition should be self-evident
+finally:a last definition to see if it works
+
+|This is a simple table.|
+>|Here is a cell that
+has a newline character in it.  Yikes.|
+|I hope that this works.|
+
+table(#table1). _|row 1, col 1|row 1, col 2|
+|\2. row 2, cols 1-2|
+|/2. rows 3-4, col 1|row 3, col 2|
+|row 4, col 2|
+|^. row 5, col 1|~. row5, col 2|
+
+table(tbl1). (head)|_. column 1 |_.      column 2 |_>.     column 3 |
+                   |   1        |        2        |(test).        3 |
+                   |   4        |(#foo). 5        |               6 |
+                   |   7        |        8        |(test#bar).    9 |
+
+bc.. This is code
+  Which you can see is a little bit
+    indented and tells us that 2>1
+      And that 1 & 2 < 4 but I'm going to hardcode an &amp; in here.
+    Do you think this will work?
+
+  Look, more indented code!
+    It's supposed to stop before the next escape block.
+
+==
+<p>This is supposed to be escaped text.  I should be able to do [1] in here with no problems, as well as other weird things.</p>
+
+bq. Like this.
+
+h3. Or this.
+==
+
+h3))>. This is a third-level header.
+
+1. And this is just a paragraph that starts with a number, perhaps in an ill-advised attempt to begin a list?
+
+h7. This is a mistake[42].
+
+bq>.. And here is a lengthier piece that actually contains what we would think of as an extended block.
+
+This is also covered as part of the previous extended block.
+
+p. And this is a normal paragraph again.
+
+fn1. This is my first footnote.
+
+fn42. This is my forty-second.
+
+p=. Written by Charles Sebold
+
+[ltm (Living Torah Ministries)]http://www.livingtorah.org
+[ltj]http://www.livingtorah.org/journal/
+
+==
+<!--
+Local Variables:
+mode: auto-fill
+End:
+-->
+==
+
+bc. Here's some code
+written at the very end, because
+that seems to be failing at the moment
+
+What about code here?

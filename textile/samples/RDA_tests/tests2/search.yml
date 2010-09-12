@@ -1,0 +1,12 @@
+---
+in:  "Has anyone seen this guy?":imdb:Stephen+Fry
+out: <p><a href="http://www.imdb.com/Find?for=Stephen+Fry">Has anyone seen this guy?</a></p>
+---
+in:  "Really nice book":amazon:Goedel+Escher+Bach
+out: <p><a href="http://www.amazon.co.uk/exec/obidos/external-search?mode=blended&amp;keyword=Goedel+Escher+Bach&amp;tag=bomtempo-21">Really nice book</a></p>
+---
+in:  "PyBlosxom":google
+out: <p><a href="http://www.google.com/search?q=PyBlosxom">PyBlosxom</a></p>
+---
+in:  "Before the Wind":isbn:0670886327
+out: <p><a href="http://www.amazon.co.uk/exec/obidos/ASIN/0670886327/bomtempo-21">Before the Wind</a></p>

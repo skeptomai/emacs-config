@@ -1,0 +1,21 @@
+---
+in:  \# item 1\n\# item 2\n\# item 3
+out: <ol>\n<li>item 1</li>\n<li>item 2</li>\n<li>item 3</li>\n</ol>
+---
+in:  \# item 1\nitem 2\n\# item 3
+out: <ol>\n<li>item 1<br />\nitem 2</li>\n<li>item 3</li>\n</ol>
+---
+in:  \#(class#id) item 1\nitem 2\n\# item 3
+out: <ol>\n<li class="class" id="id">item 1<br />\nitem 2</li>\n<li>item 3</li>\n</ol>
+---
+in:  (class#id)\# item 1\nitem 2\n\# item 3
+out: <ol class="class" id="id">\n<li>item 1<br />\nitem 2</li>\n<li>item 3</li>\n</ol>
+---
+in:  (class#id)\# item 1\n\#\# item 2\n\# item 3
+out: <ol class="class" id="id">\n<li>item 1\n<ol>\n<li>item 2</li>\n</ol>\n</li>\n<li>item 3</li>\n</ol>
+---
+in:  (class#id)\# item 1\n\#\# item 2\n\#\#\# item 3
+out: <ol class="class" id="id">\n<li>item 1\n<ol>\n<li>item 2\n<ol>\n<li>item 3</li>\n</ol>\n</li>\n</ol>\n</li>\n</ol>
+---
+in:  \#(class#id) item 1\n\#\# item 2\n\#\#\# item 3\n\#\#\#\# item 4
+out: <ol>\n<li class="class" id="id">item 1\n<ol>\n<li>item 2\n<ol>\n<li>item 3\n<ol>\n<li>item 4</li>\n</ol>\n</li>\n</ol>\n</li>\n</ol>\n</li>\n</ol>

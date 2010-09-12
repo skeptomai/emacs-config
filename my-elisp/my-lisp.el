@@ -12,8 +12,8 @@
 ;;     (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 ;;     (slime-setup)))
 
-(require 'slime-autoloads)
-(slime-setup '(slime-repl slime-fancy slime-banner))
+;; (require 'slime-autoloads)
+;; (slime-setup '(slime-repl slime-fancy slime-banner))
 
 ;; reading Lisp HTML docs in Emacs
 (require 'w3m-load)
@@ -70,7 +70,8 @@
   '((lispworks . ("/Users/cb/Projects/lisptty/tty-lispworks -init /Users/cb/lisp/lispworks-init.lisp"
                   "*slime-repl lispworks*"))
     (sbcl . ("/usr/local/bin/sbcl --userinit /Users/cb/lisp/sbcl-init.lisp" 
-             "*slime-repl sbcl*"))))
+             "*slime-repl sbcl*"))
+    (clojure . ("" "*slime-repl clojure*"))))
 
 (defun lisp-repl-name (lisp)
   (second (cdr (assoc lisp *lisps*))))
@@ -103,3 +104,7 @@
   (interactive)
   (w3m-find-file "~/lisp/lisp web sites/www.supelec.fr/docs/cltl/cltl2.html"))
 
+(defun clojure ()
+  "Start slime against running clojure swank"
+  (interactive)
+  (if (null (get-buffer (lisp-repl-name 'clojure)))   (slime-connect "localhost" 4005)))

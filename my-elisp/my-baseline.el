@@ -1,9 +1,11 @@
 (require 'cl)
 
-(set-default-font "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-
 ;; Remove splash screen
 (setq inhibit-splash-screen t)
+
+;; Set directory for backup files
+(setq backup-directory-alist `(("." . ,(expand-file-name
+                                        (concat (getenv "HOME") "/emacs.d" "/backups")))))
 
 ;; Install color theme if it's here
 (ignore-errors
@@ -11,13 +13,25 @@
   (color-theme-initialize)
   (color-theme-clarity))
 
+;; Add time to the info bar
+(display-time-mode)
+
 (defun unwriteroom ()
-  (aquamacs-toggle-full-frame)
+  (cond 
+      ((fboundp 'aquamacs-toggle-full-frame)
+       (aquamacs-toggle-full-frame))
+      ((fboundp 'ns-toggle-fullscreen)
+       (ns-toggle-fullscreen)))
   (modify-frame-parameters (selected-frame) `((alpha . 100)))
   (set-window-margins nil 0 0)
   t)
 
 (defun writeroom ()
+  (cond
+      ((fboundp 'aquamacs-toggle-full-frame)
+       (aquamacs-toggle-full-frame))
+      ((fboundp 'ns-toggle-fullscreen)
+       (ns-toggle-fullscreen)))
   (modify-frame-parameters nil (list (cons 'fullscreen 'fullboth)))
   (set-window-margins nil 10 40)
   (set-frame-parameter (selected-frame) 'font "-apple-constantia-medium-i-normal--0-0-0-0-m-0-iso10646-1")
@@ -55,6 +69,12 @@
 (setq-default desktop-save t)
 (setq-default default-left-fringe-width 0
               default-right-fringe-width 0)
+(setq-default text-scale-mode t)
+
+;; Not sure where to put this
+(add-hook 'c-mode-hook (lambda ()
+                         (setq compilation-read-command nil)
+                         (define-key c-mode-map "\C-c\C-k" 'compile) ))
 
 ;; Enable recent file tracking & opening
 (recentf-mode t)
@@ -80,6 +100,47 @@
 
 ;; better buffer management
 (iswitchb-mode t)
+
+;; filecache
+(require 'filecache)
+
+(defun file-cache-ido-find-file (file)
+  "Using ido, interactively open file from file cache'.
+First select a file, matched using ido-switch-buffer against the contents
+in `file-cache-alist'. If the file exist in more than one
+directory, select directory. Lastly the file is opened."
+  (interactive (list (file-cache-ido-read "File: "
+                                          (mapcar
+                                           (lambda (x)
+                                             (car x))
+                                           file-cache-alist))))
+  (let* ((record (assoc file file-cache-alist)))
+    (find-file
+     (expand-file-name
+      file
+      (if (= (length record) 2)
+          (car (cdr record))
+        (file-cache-ido-read
+         (format "Find %s in dir: " file) (cdr record)))))))
+
+(defun file-cache-ido-read (prompt choices)
+  (let ((ido-make-buffer-list-hook
+	 (lambda ()
+	   (setq ido-temp-list choices))))
+    (ido-read-buffer prompt)))
+
+;; Change this to filter out your version control files
+(add-to-list 'file-cache-filter-regexps "\\.svn-base$")
+(add-to-list 'file-cache-filter-regexps "\\.git$")
+
+(global-set-key (kbd "ESC ESC f") 'file-cache-ido-find-file)
+
+;; Matching parentheses
+(autoload 'paredit-mode "paredit"
+  "Minor mode for pseudo-structurally editing Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
 
 ;; Make lines wrap automagically in text mode
 (add-hook 'text-mode-hook 'text-mode-hook-identify)
@@ -107,6 +168,7 @@
     (or (eq window-system 'mac)
         (eq system-type 'darwin))
   (progn
+    (set-default-font "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
     (setq w3m-command "/opt/local/bin/w3m")
     (setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)
                                         ("weitz" . w3m-browse-url)
@@ -119,6 +181,8 @@
 (server-start) ;; startup emacsclient support
 
 (ansi-term "bash" "localhost") ;; start a shell
+
+(switch-to-buffer "*scratch*") ;; don't want to be left in the term buffer
 
 (type-break-mode) ;; get me to stop working once in a while
 

@@ -1,0 +1,15 @@
+---
+in:  p. teste\n\nclear.\n\np. teste
+out: <p>teste</p>\n\n<p style="clear:both;">teste</p>
+---
+in:  p. teste\n\nclear>.\n\np. teste
+out: <p>teste</p>\n\n<p style="clear:right;">teste</p>
+---
+in:  p. teste\n\nclear<.\n\np. teste
+out: <p>teste</p>\n\n<p style="clear:left;">teste</p>
+---
+in:  p. teste\n\nclear<.\n\nbq. teste
+out: <p>teste</p>\n\n<blockquote style="clear:left;">\n<p>teste</p>\n</blockquote>
+---
+in:  p. teste\n\nclear<.\n\nbq{color:red}. teste
+out: <p>teste</p>\n\n<blockquote style="color:red;clear:left;">\n<p>teste</p>\n</blockquote>

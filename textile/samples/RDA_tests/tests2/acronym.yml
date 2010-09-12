@@ -1,0 +1,12 @@
+---
+in:  XHTML(eXtensible HyperText Markup Language)
+out: <p><acronym title="eXtensible HyperText Markup Language"><span class="caps">XHTML</span></acronym></p>
+---
+in:  OPeNDAP(Open source Project for a Network Data Access Protocol)
+out: <p><acronym title="Open source Project for a Network Data Access Protocol">OPeNDAP</acronym></p>
+---
+in:  L94(Levitus 94)
+out: <p><acronym title="Levitus 94">L94</acronym></p>
+---
+in:  BASIC(Beginner's All-purpose Symbolic Instruction Code)
+out: <p><acronym title="Beginner's All-purpose Symbolic Instruction Code"><span class="caps">BASIC</span></acronym></p>

@@ -1,0 +1,6 @@
+---
+in:  pre. O, mar salgado!\nQuanto do teu sal\nSao lagrimas de Portugal?
+out: <pre>\nO, mar salgado!\nQuanto do teu sal\nSao lagrimas de Portugal?\n</pre>
+---
+in:  pre(((((. Keep away from that left margin!
+out: <pre style="padding-left:5em;">\nKeep away from that left margin!\n</pre>

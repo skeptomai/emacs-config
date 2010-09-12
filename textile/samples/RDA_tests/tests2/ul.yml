@@ -1,0 +1,12 @@
+---
+in:  \* item 1\n\* item 2\n\* item 3
+out: <ul>\n<li>item 1</li>\n<li>item 2</li>\n<li>item 3</li>\n</ul>
+---
+in:  \* item 1\nitem 2\n\* item 3
+out: <ul>\n<li>item 1<br />\nitem 2</li>\n<li>item 3</li>\n</ul>
+---
+in:  \*(class#id) item 1\nitem 2\n\* item 3
+out: <ul>\n<li class="class" id="id">item 1<br />\nitem 2</li>\n<li>item 3</li>\n</ul>
+---
+in:  (class#id)\* item 1\nitem 2\n\* item 3
+out: <ul class="class" id="id">\n<li>item 1<br />\nitem 2</li>\n<li>item 3</li>\n</ul>

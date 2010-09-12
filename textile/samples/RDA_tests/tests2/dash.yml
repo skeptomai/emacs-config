@@ -1,0 +1,12 @@
+---
+in:  I was thinking about writing a -- what time did you say the movie started?
+out: <p>I was thinking about writing a&#8212;what time did you say the movie started?</p>
+---
+in:  I just don?t f---ing care about 3.0 browsers.
+out: <p>I just don?t f&#8212;&#8212;ing care about 3.0 browsers.</p>
+---
+in:  Peter Sheerin [1969-] authored this document.
+out: <p>Peter Sheerin [1969&#8212;] authored this document.</p>
+---
+in:  Peter Sheerin [1969-2010] authored this document.
+out: <p>Peter Sheerin [1969&#8211;2010] authored this document.</p>
