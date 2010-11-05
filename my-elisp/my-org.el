@@ -30,6 +30,9 @@
 (setq org-todo-keywords '("TODO" "STARTED" "WAITING" "DONE"))                 
 (setq org-agenda-include-diary t)                                             
 (setq org-agenda-include-all-todo t)
+(setq org-tag-alist '(("EPIC") ("BILLING") ("CHEF") ("CI") ("CORPSITE") ("OPERATIONS") ("PLATFORM") ("RACKSPACE") ("REPORTING") ("ROOT_CAUSE") ("SEARCH") ("AUTHZ")))
 
-(setq org-agenda-files (append (list "~/org/test.org") org-agenda-files))
+(require 'find-lisp)
+(setq org-agenda-files (find-lisp-find-files "~/Projects/opscode/main/pbime/pbis" "\\.org$") )
+
 

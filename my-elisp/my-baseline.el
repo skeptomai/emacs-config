@@ -7,6 +7,9 @@
 (setq backup-directory-alist `(("." . ,(expand-file-name
                                         (concat (getenv "HOME") "/emacs.d" "/backups")))))
 
+;; Yeah, this is crappy.  I add the specific path to the MacTeX tools
+(setenv "PATH" (concat "/usr/texbin:" (getenv "PATH")))
+
 ;; Install color theme if it's here
 (ignore-errors
   (require 'color-theme)
