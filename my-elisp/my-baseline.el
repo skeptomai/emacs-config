@@ -1,4 +1,5 @@
 (require 'cl)
+(require 'find-lisp)
 
 ;; Remove splash screen
 (setq inhibit-splash-screen t)
@@ -7,8 +8,20 @@
 (setq backup-directory-alist `(("." . ,(expand-file-name
                                         (concat (getenv "HOME") "/emacs.d" "/backups")))))
 
-;; Yeah, this is crappy.  I add the specific path to the MacTeX tools
-(setenv "PATH" (concat "/usr/texbin:" (getenv "PATH")))
+(defun read-lines (fpath) 
+  "Return a list of lines of a file at at FPATH." 
+  (with-temp-buffer 
+    (insert-file-contents fpath) 
+    (split-string (buffer-string) "\n" t)))
+
+(setq exec-path (mapcan
+                 (lambda (x) (read-lines x))
+                 (cons "/etc/paths"  (find-lisp-find-files "/etc/paths.d" "\.*"))))
+
+(setenv "PATH"  (mapconcat 'identity exec-path ":" ))
+
+;; I use aspell instead of ispell, installed with homebrew
+(setq-default ispell-program-name "aspell")
 
 ;; Install color theme if it's here
 (ignore-errors
