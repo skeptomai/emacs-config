@@ -30,9 +30,25 @@
 (setq org-todo-keywords '("TODO" "STARTED" "WAITING" "DONE"))                 
 (setq org-agenda-include-diary t)                                             
 (setq org-agenda-include-all-todo t)
-(setq org-tag-alist '(("EPIC") ("BILLING") ("CHEF") ("CI") ("CORPSITE") ("OPERATIONS") ("PLATFORM") ("RACKSPACE") ("REPORTING") ("ROOT_CAUSE") ("SEARCH") ("AUTHZ")))
+(setq org-tag-alist '(("EPIC") ("BILLING") ("CHEF") ("CI") ("CORPSITE") ("OPERATIONS") 
+                      ("PLATFORM") ("RACKSPACE") ("REPORTING") ("ROOT_CAUSE") 
+                      ("SEARCH") ("AUTHZ")))
 
 (require 'find-lisp)
-(setq org-agenda-files (find-lisp-find-files "~/Projects/opscode/main/pbime/pbis" "\\.org$") )
-
-
+(let ((pbis "~/Projects/opscode/main/pbime/pbis"))
+  (when (file-accessible-directory-p pbis)
+    (setq org-agenda-files (find-lisp-find-files pbis "\\.org$") )
+    (require 'org-publish)
+    (setq org-publish-project-alist
+          '(
+            ("pbis"
+             :base-directory "~/Projects/opscode/main/pbime/pbis"
+             :base-extension "org"
+             :publishing-directory "~/Sites/"
+             :recursive t
+             :publishing-function org-publish-org-to-html
+             :headline-levels 4             ; Just the default for this project.
+             :auto-preamble t
+             )
+            ))
+    ))

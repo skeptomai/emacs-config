@@ -5,7 +5,7 @@
 ;; weird bindings easier when debugging [skeptomai]
 ;;
 
-(global-set-key "\C-xwf" 'confluence-get-page)
+;; (global-set-key "\C-xwf" 'confluence-get-page)
 (global-set-key "\M-," 'point-to-top)
 (global-set-key "\C-x," 'tags-loop-continue)
 (global-set-key "\M-." 'point-to-bottom)

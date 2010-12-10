@@ -8,6 +8,7 @@
 (setq backup-directory-alist `(("." . ,(expand-file-name
                                         (concat (getenv "HOME") "/emacs.d" "/backups")))))
 
+;; Set paths on OS X the hard way, by reading /etc/paths and /etc/paths.d
 (defun read-lines (fpath) 
   "Return a list of lines of a file at at FPATH." 
   (with-temp-buffer 
