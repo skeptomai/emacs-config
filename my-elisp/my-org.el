@@ -35,14 +35,14 @@
                       ("SEARCH") ("AUTHZ")))
 
 (require 'find-lisp)
-(let ((pbis "~/Projects/opscode/main/pbime/pbis"))
+(let ((pbis "~/Projects/opscode/main/pbime/pbi-dev/pbis"))
   (when (file-accessible-directory-p pbis)
     (setq org-agenda-files (find-lisp-find-files pbis "\\.org$") )
     (require 'org-publish)
     (setq org-publish-project-alist
           '(
             ("pbis"
-             :base-directory "~/Projects/opscode/main/pbime/pbis"
+             :base-directory "~/Projects/opscode/main/pbime/pbi-dev/pbis"
              :base-extension "org"
              :publishing-directory "~/Sites/"
              :recursive t

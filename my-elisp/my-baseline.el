@@ -28,7 +28,7 @@
 (ignore-errors
   (require 'color-theme)
   (color-theme-initialize)
-  (color-theme-clarity))
+  (color-theme-sitaramv-nt))
 
 ;; Add time to the info bar
 (display-time-mode)

@@ -76,7 +76,7 @@ matches a regexp in `erc-keywords'."
              (my-erc-page-allowed nick))
     (my-erc-page-popup-notification nick message)))
 
-(add-hook 'erc-text-matched-hook 'my-erc-page-me)
+;;  (add-hook 'erc-text-matched-hook 'my-erc-page-me)
 
 (defun my-erc-page-me-PRIVMSG (proc parsed)
   (let ((nick (car (erc-parse-user (erc-response.sender parsed))))
@@ -88,5 +88,5 @@ matches a regexp in `erc-keywords'."
       (my-erc-page-popup-notification nick msg)
       nil)))
 
-(add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
+;; (add-hook 'erc-server-PRIVMSG-functions 'my-erc-page-me-PRIVMSG)
 
