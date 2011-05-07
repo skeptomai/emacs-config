@@ -31,7 +31,7 @@
   "Format of message to display in dialog box")
 
 (defvar my-erc-page-nick-alist nil
-  "Alist of nicks and the last time they tried to trigger a
+  "A list of nicks and the last time they tried to trigger a
 notification")
 
 (defvar my-erc-page-timeout 30

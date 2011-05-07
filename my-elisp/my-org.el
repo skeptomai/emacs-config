@@ -27,7 +27,7 @@
 (setq auto-mode-alist
       (append '(("TODO$" . org-mode)) auto-mode-alist))
 (global-set-key (kbd "C-c a") 'org-agenda)                                       
-(setq org-todo-keywords '("TODO" "STARTED" "WAITING" "DONE"))                 
+(setq org-todo-keywords '("TODO" "NOTE" "STARTED" "WAITING" "DONE"))
 (setq org-agenda-include-diary t)                                             
 (setq org-agenda-include-all-todo t)
 (setq org-tag-alist '(("EPIC") ("BILLING") ("CHEF") ("CI") ("CORPSITE") ("OPERATIONS") 

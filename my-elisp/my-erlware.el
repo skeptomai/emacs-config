@@ -11,12 +11,20 @@
 (require 'distel)
 (distel-setup)
 
+;; Simple fn to browse erlang man pages in emacs
+(defun get-erl-man ()
+  (interactive)
+  (let* ((man-args (format "%s" (current-word))))
+    (man man-args)))
+
 ;; Some Erlang customizations
 (add-hook 'erlang-mode-hook
 	  (lambda ()
 	    ;; when starting an Erlang shell in Emacs, default in the node name
 	    (setq inferior-erlang-machine-options '("-sname" "emacs"))
         (flymake-mode-on)
+        ;; browse erlang man pages
+        (local-set-key [(f7)] (lambda () (interactive) (get-erl-man)))
         ;; add my exports generator
         (local-set-key (kbd "M-]") 'erlang-exports)
 	    ;; add Erlang functions to an imenu menu

@@ -1,5 +1,5 @@
 (let* ((init-path (concat *home-elisp-path* "/my-elisp"))
-       (my-elisps '("baseline" "keys" "fns" "erc" "org" "bm" "tramp" "erlware" "cucumber" "textile-mode" "textile"))
+       (my-elisps '("baseline" "keys" "fns" "erc" "org" "bm" "tramp" "erlware" "cucumber" "textile-mode" "textile" "http-twiddle"))
        (default-directory *home-elisp-path*))
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path))
