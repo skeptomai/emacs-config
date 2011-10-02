@@ -159,7 +159,7 @@ dired, display-time, cperl, font-lock, widget, x-symbol."
      (yellow ((t (:foreground "yellow"))))
      (zmacs-region ((t (:background "yellow")))))))
 
-(color-theme-arjen)
+(color-theme-billw)
 
 ;; Add time to the info bar
 (display-time-mode)
@@ -230,9 +230,6 @@ dired, display-time, cperl, font-lock, widget, x-symbol."
 ;; Get rid of old buffers on schedule
 (setq-default midnight-mode t)
 
-;; Highlight the current line
-(setq-default global-hl-line-mode t)
-
 ;; window switching made easy
 (windmove-default-keybindings)
 
@@ -248,6 +245,9 @@ dired, display-time, cperl, font-lock, widget, x-symbol."
 
 ;; better buffer management
 (iswitchb-mode t)
+
+;; Blink the cursor so it's easier for my old eyes to find
+(blink-cursor-mode)
 
 ;; filecache
 (require 'filecache)
@@ -305,6 +305,13 @@ directory, select directory. Lastly the file is opened."
 ;; I like ediff to split horizontally.  Default is vertically
 (setq-default ediff-split-window-function 'split-window-horizontally)
 
+;; I like raspberries.  No, really I like to have git recognize me
+;; for things like gists
+(let ((user (shell-command-to-string "git config --global --list | grep github.user | cut -d\"=\" -f2 | awk '{printf \"%s\", $0}'"))
+      (token (shell-command-to-string "git config --global --list | grep github.token | cut -d\"=\" -f2 | awk '{printf \"%s\", $0}'")))
+      (setq github-user user)
+      (setq github-token token))
+
 ;; Set sensible defaults for my environment
 ;; including browsing of hyperspec in emacs with w3m
 ;; I've only got this set on the Mac for now 
@@ -341,4 +348,3 @@ directory, select directory. Lastly the file is opened."
 
 ;; I have gpg installed here, and epa/epg are available
 (when (boundp 'epg-gpg-program) (setq epg-gpg-program "/usr/local/bin/gpg"))
-

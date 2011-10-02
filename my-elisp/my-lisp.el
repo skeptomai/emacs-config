@@ -12,8 +12,9 @@
 ;;     (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 ;;     (slime-setup)))
 
-;; (require 'slime-autoloads)
-;; (slime-setup '(slime-repl slime-fancy slime-banner))
+(add-to-list 'load-path (concat *home-elisp-path* "/slime/") )
+(require 'slime-autoloads)
+(slime-setup '(slime-repl slime-fancy slime-banner))
 
 ;; reading Lisp HTML docs in Emacs
 (require 'w3m-load)
@@ -59,12 +60,12 @@
 ;;                                  (paredit-mode +1)))
 (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 
-(setq inferior-lisp-program "/Users/cb/Projects/lisptty/tty-lispworks -init /Users/cb/lisp/lispworks-init.lisp"
-;;(setq inferior-lisp-program "/usr/local/bin/sbcl --userinit /Users/cb/lisp/sbcl-init.lisp"
+;; (setq inferior-lisp-program (setq inferior-lisp-program "/usr/local/bin/sbcl --userinit /Users/cb/lisp/sbcl-init.lisp"
+;; "/Users/cb/Projects/lisptty/tty-lispworks -init /Users/cb/lisp/lispworks-init.lisp"
 ;;(setq inferior-lisp-program "/Volumes/ccl/dx86cl64"
-      lisp-indent-function 'common-lisp-indent-function
-      slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-      common-lisp-hyperspec-root "file:///Volumes/HyperSpec-7-0/HyperSpec-7-0/HyperSpec/")
+;; lisp-indent-function 'common-lisp-indent-function
+;; slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+;; common-lisp-hyperspec-root "file:///Volumes/HyperSpec-7-0/HyperSpec-7-0/HyperSpec/")
 
 (defvar *lisps* 
   '((lispworks . ("/Users/cb/Projects/lisptty/tty-lispworks -init /Users/cb/lisp/lispworks-init.lisp"

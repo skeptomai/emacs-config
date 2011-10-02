@@ -6,6 +6,7 @@
 ;; Maintainer: Hasan Veldstra <h@vidiowiki.com>
 ;; Created: 1 Feb 2006
 ;; Adapted-By: Hasan Veldstra
+;; Adapted-By: Christopher Brown <cb@opscode.com>
 ;; Version: 1.0
 ;; URL: https://github.com/hassy/http-twiddle/blob/master/http-twiddle.el
 ;; Keywords: HTTP, REST, SOAP
@@ -44,6 +45,7 @@
 ;;; Code:
 
 (require 'font-lock)                    ; faces
+(require 'starttls)
 
 (defgroup http-twiddle nil
   "HTTP Request Twiddling"
@@ -54,18 +56,26 @@
   (unless (fboundp 'define-minor-mode)
     (require 'easy-mmode)
     (defalias 'define-minor-mode 'easy-mmode-define-minor-mode))
-  (require 'cl))
+  (require 'cl)
+  (set-time-zone-rule t))
 
 (define-minor-mode http-twiddle-mode
   "Minor mode for twiddling around with HTTP requests and sending them.
 Use `http-twiddle-mode-send' (\\[http-twiddle-mode-send]) to send the request."
   nil
   " http-twiddle"
-  '(("\C-c\C-c" . http-twiddle-mode-send)))
+  '(("\C-c\C-c" . http-twiddle-mode-send)
+    ("\C-c\C-k" . http-twiddle-mode-send-ssl)
+    ("\C-c\C-t" . http-twiddle-mode-send-signed)))
 
 (defcustom http-twiddle-show-request t
   "*Show the request in the transcript."
   :type '(boolean)
+  :group 'http-twiddle)
+
+(defcustom http-twiddle-signing-method nil
+  "Function to cryptographically sign the request in the twiddle buffer"
+  :type '(function)
   :group 'http-twiddle)
 
 (add-to-list 'auto-mode-alist '("\\.http-twiddle$" . http-twiddle-mode))
@@ -106,12 +116,24 @@ Use `http-twiddle-mode-send' (\\[http-twiddle-mode-send]) to send the request."
       (use-local-map http-twiddle-response-mode-map)))
   "Major mode for interacting with HTTP responses.")
 
+(defun http-twiddle-mode-send-ssl (host port)
+  (interactive (http-twiddle-read-endpoint))
+  (execute-guts host 443 t))
+
+(defun http-twiddle-mode-send-signed (host port)
+  (interactive (http-twiddle-read-endpoint))
+  (execute-guts host 443 t t))
+
 (defun http-twiddle-mode-send (host port)
   "Send the current buffer to the server.
 Linebreaks are automatically converted to CRLF (\\r\\n) format and any
 occurences of \"$Content-Length\" are replaced with the actual content
 length."
   (interactive (http-twiddle-read-endpoint))
+  (execute-guts host port))
+
+(defun execute-guts (host port &optional use-tls sign-request)
+  "Internal send to either http or tls"
   ;; close any old connection
   (when (and http-twiddle-process
              (buffer-live-p (process-buffer http-twiddle-process)))
@@ -119,7 +141,8 @@ length."
       (let ((inhibit-read-only t))
         (widen)
         (delete-region (point-min) (point-max)))))
-
+  (when (and use-tls sign-request)
+    (funcall http-twiddle-signing-method (buffer-string) ))
   (let ((content (buffer-string)))
     (with-temp-buffer
       (set (make-variable-buffer-local 'font-lock-keywords)
@@ -130,9 +153,14 @@ length."
       (let ((request (buffer-string))
             (inhibit-read-only t))
         (setq http-twiddle-process
-              (open-network-stream "http-twiddle" "*HTTP Twiddle*" host port))
+              (let ((fn (if use-tls 'starttls-open-stream-gnutls 'open-network-stream))) 
+                (progn
+                  (get-buffer-create "*HTTP Twiddle*")
+                (funcall fn "http-twiddle" "*HTTP Twiddle*" host port))))
         (set-process-filter http-twiddle-process 'http-twiddle-process-filter)
         (set-process-sentinel http-twiddle-process 'http-twiddle-process-sentinel)
+        (when use-tls (progn
+                        (message "Negotiating with %s: %s" host (starttls-negotiate-gnutls http-twiddle-process))))
         (process-send-string http-twiddle-process request)
         (save-selected-window
           (pop-to-buffer (process-buffer http-twiddle-process))
@@ -181,7 +209,6 @@ length."
     (let ((content-length
            (save-excursion (when (search-forward "\r\n\r\n" nil t)
                              (- (point-max) (point))))))
-
       (let ((got-content-length-already
              (save-excursion
                (goto-char (point-min))

@@ -10,3 +10,6 @@
 [submodule "swank-clojure"]
 	path = swank-clojure
 	url = git://github.com/jochu/swank-clojure.git
+[submodule "erlware-mode"]
+	path = erlware-mode
+	url = git@github.com:skeptomai/erlware-mode.git
