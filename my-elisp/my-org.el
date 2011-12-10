@@ -2,6 +2,11 @@
 (require 'remember)
 (require 'remember-autoloads)
 
+;; typically don't need sub/super, but I do have underscores in variable names [cb]
+(setq org-export-with-sub-superscripts nil)
+;; Don't include selected text in the link
+(setq org-context-in-file-links nil)
+
 (setq org-enforce-todo-dependencies t)
 ;; completion in org
 (setq org-completion-use-ido t)
@@ -10,8 +15,10 @@
 (setq org-log-done 'note)
 
 (setq org-remember-templates
-      '(("Tasks" ?t "* TODO %?\n  %i\n  %a" "~/org/organizer.org")
-        ("Appointments" ?a "* Appointment: %?\n%^T\n%i\n  %a" "~/org/organizer.org")))
+      '(("Code" ?c "* %?\n %i\n %A" "~/org/code.org" "Code")
+        ("Tasks" ?t "* TODO %?\n  %i\n  %a" "~/org/organizer.org")
+        ("Appointments" ?a "* Appointment: %?\n%^T\n%i\n  %a" "~/org/organizer.org"))
+      )
 (setq remember-annotation-functions '(org-remember-annotation))
 (setq remember-handler-functions '(org-remember-handler))
 
