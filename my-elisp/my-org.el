@@ -15,7 +15,9 @@
 (setq org-log-done 'note)
 
 (setq org-remember-templates
-      '(("Code" ?c "* %?\n %i\n %A" "~/org/code.org" "Code")
+      '(("AppleScript remember" ?y "* %:shortdesc\n  %:initial\n   Source: %u, %c\n\n  %?" (concat org-directory "inbox.org") "Remember")
+        ("AppleScript note" ?z "* %?\n\n  Date: %u\n" (concat org-directory "inbox.org") "Notes")
+        ("Code" ?c "* %?\n %i\n %A" "~/org/code.org" "Code")
         ("Tasks" ?t "* TODO %?\n  %i\n  %a" "~/org/organizer.org")
         ("Appointments" ?a "* Appointment: %?\n%^T\n%i\n  %a" "~/org/organizer.org"))
       )

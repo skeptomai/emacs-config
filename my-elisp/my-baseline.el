@@ -1,6 +1,22 @@
 (require 'cl)
 (require 'find-lisp)
 
+(setq org-export-latex-listings 'minted)
+(setq org-export-latex-custom-lang-environments
+      '((emacs-lisp "common-lispcode")))
+(setq org-export-latex-minted-options
+      '(("frame" "lines")
+        ("fontsize" "\\scriptsize")
+        ("linenos" "")))
+(setq org-latex-to-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+;; Don't bother me about the compile-command.  I trust you
+(setq safe-local-variable-values '(compile-command) )
+(setq enable-local-variables :safe)
+
 ;; Generate inline-css so syntax-colored source code
 ;; is easier to cut-n-paste elsewhere
 (setq htmlize-output-type "inline-css")
@@ -250,6 +266,7 @@ dired, display-time, cperl, font-lock, widget, x-symbol."
 (when (fboundp 'tabbar-mode) (tabbar-mode nil))
 
 ;; Syntax colouring, show line and column numbers in status bar
+(setq-default fill-column 92)
 (setq-default global-font-lock-mode t)
 (setq-default line-number-mode t)
 (setq-default column-number-mode t)
@@ -263,6 +280,10 @@ dired, display-time, cperl, font-lock, widget, x-symbol."
 (add-hook 'c-mode-hook (lambda ()
                          (setq compilation-read-command nil)
                          (define-key c-mode-map "\C-c\C-k" 'compile) ))
+
+(add-hook 'c++-mode-hook (lambda ()
+                         (setq compilation-read-command nil)
+                         (define-key c++-mode-map "\C-c\C-k" 'compile) ))
 
 ;; Enable recent file tracking & opening
 (recentf-mode t)

@@ -11,6 +11,7 @@
 (global-set-key "\M-." 'point-to-bottom)
 (global-set-key "\C-x\C-m" 'mark-defun)
 (global-set-key "\C-cm" 'execute-extended-command)
+(global-set-key "\C-x\M-m" 'manual-entry) 
 (global-set-key "\C-cs" 'save-buffer)
 (global-set-key "\C-cb" 'end-of-buffer)
 (global-set-key "\C-ct" 'beginning-of-buffer)
