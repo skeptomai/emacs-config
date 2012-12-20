@@ -61,3 +61,44 @@
              )
             ))
     ))
+
+(setq-default org-startup-indented t)
+
+(load-library "../org-contrib/org-export-generic.el")
+
+(when (functionp 'org-set-generic-type)
+  (org-set-generic-type
+   "confluence"
+   '(
+     :file-suffix ".txt"
+                  :key-binding                   ?c
+
+                  :header-prefix            	    "headerprefix"
+                  :header-suffix            	    "headersuffix"
+
+                  :title-format             	    "h1. %s\n"
+
+                  :date-export        	    nil
+
+                  :toc-export                    nil
+
+                  :body-header-section-numbers   nil
+                  :body-section-prefix           "\n"
+
+                  :body-section-header-prefix    ("h2. " "h3. " "h4. "
+                                                  "h5. " "h6. ")
+
+                  :body-section-header-suffix    ("\n" "\n" "\n"
+                                                  "\n" "\n")
+
+                  :body-line-export-preformated  t          ;; yes/no/maybe???
+                  :body-line-format              "%s\n"
+                  :body-line-wrap                75
+
+                  :body-line-fixed-format       " %s\n"
+
+                  :body-list-format              "* %s\n"
+                  :body-number-list-format       "# %s\n"
+
+                  :body-bullet-list-prefix       ("* " "** " "*** " "**** " "***** ")
+                  )))
