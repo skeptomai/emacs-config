@@ -1,5 +1,4 @@
-GET /organizations/skeptomaijun21org/nodes/ubuntu-32-fatty HTTP/1.1
+GET /organizations/zombywoof/nodes HTTP/1.1
 Host: api.opscode.com
 Accept: application/json
 Connection: close
-

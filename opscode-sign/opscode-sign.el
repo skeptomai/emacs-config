@@ -32,8 +32,9 @@
 (require 'sha1)
 (require 'base64)
 
-(defvar *SIGNING_DESCRIPTION* "version=1.0")
+(defvar *SIGNING_DESCRIPTION* "algorithm=sha1;version=1.0")
 (defvar *CHEF_VERSION* "0.10.2")
+(defvar *TEMP_FILE_STEM* "/tmp/opscode-emacs-sign-")
 
 (defcustom opscode-userid nil
   "User ID for Opscode signed requests"
@@ -90,7 +91,17 @@
 
 (defun opscode-hash-content (content-string)
   (interactive "MContent to hash: \n")
-  (chomp (base64-encode-string (sha1-binary content-string))))
+  (let ((temp-file (concat *TEMP_FILE_STEM* (insert content-string) ))) 
+    (with-temp-file temp-file   
+      (shell-command-to-string "openssl dgst -binary -sha1 /tmp/opscode-emacs-sign | openssl enc -base64" ) )))
+
+(defun opscode-auth-headers (sig-str)
+  (let* ((sig-len (length sig-str))
+         (sig-segs (1- (fceiling (/ sig-len 60.0) ) )))
+    (loop for x from 0 to sig-segs
+          for start = (* 60 x)
+          for stop  = (+ (min 60 (- sig-len start) )  start)
+          collect (cons (concat "X-Ops-Authorization-" (number-to-string (1+ x) ) )  ( substring sig-str start stop ) ) )))
 
 (defun opscode-canonicalize-request (http-method canonical-path hashed-body canonical-time user-id)
   (interactive "MMethod: \nMCanonical Path: \nMHashed-body: \nMCanonical Time: \nMUser Id: \n")
@@ -99,25 +110,24 @@
 
 (defun opscode-sign-content (private-key-file content-string)
   (interactive "fPrivate Key: \nMContent: \n")
-  (shell-command-to-string (format "echo -n \"%s\" | openssl rsautl -sign -inkey %s" content-string private-key-file) ))
+  (shell-command-to-string (format "echo -n \"%s\" | openssl rsautl -sign -inkey %s | openssl enc -base64" content-string private-key-file) ))
 
 (defun opscode-sign-request (http-method path body canonical-time user-id private-key)
   (let* ((canonical-path (opscode-canonicalize-path path) )
          (hashed-body (opscode-hash-content body) )
          (signature (chomp
-                    (base64-encode-string 
                      (opscode-sign-content private-key 
                                    (opscode-canonicalize-request 
                                     http-method 
                                     canonical-path 
                                     hashed-body 
-                                    canonical-time user-id))))))
-    `(("X-Ops-Authorization-1" . ,signature)
-      ("X-Ops-Sign" . ,*SIGNING_DESCRIPTION*)
-      ("X-Chef-Version" . ,*CHEF_VERSION*)
-      ("X-Ops-Userid" . ,user-id)
-      ("X-Ops-Timestamp" . ,canonical-time)
-      ("X-Ops-Content-Hash" . ,hashed-body))))
+                                    canonical-time user-id)))))
+    (append (opscode-auth-headers signature)    
+            `(("X-Ops-Sign" . ,*SIGNING_DESCRIPTION*)
+              ("X-Chef-Version" . ,*CHEF_VERSION*)
+              ("X-Ops-UserId" . ,user-id)
+              ("X-Ops-Timestamp" . ,canonical-time)
+              ("X-Ops-Content-Hash" . ,hashed-body)) ) ))
 
 (defun opscode-header-block (header-list) (mapconcat (lambda (item) (format "%s: %s" (car item) (cdr item))  ) header-list "\n") ) 
 
@@ -125,6 +135,13 @@
   "Chomp leading and tailing whitespace from STR."
   (let ((s (if (symbolp str) (symbol-name str) str)))
     (replace-regexp-in-string "\\(^[[:space:]\n]*\\|[[:space:]\n]*$\\)" "" s)))
+
+(defun insert-random-string ()
+  "Insert a random alphanumerics string of length 6."
+  (interactive)
+  (let ((mycharset "1234567890abcdefghijklmnopqrstyvwxyz"))
+    (dotimes (i 6)
+      (insert (elt mycharset (random (length mycharset)))))))
 
 ;; Test
 
