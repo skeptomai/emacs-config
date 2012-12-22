@@ -91,9 +91,10 @@
 
 (defun opscode-hash-content (content-string)
   (interactive "MContent to hash: \n")
-  (let ((temp-file (concat *TEMP_FILE_STEM* (insert content-string) ))) 
-    (with-temp-file temp-file   
-      (shell-command-to-string (concat "openssl dgst -binary -sha1 " temp-file  "  | openssl enc -base64")))))
+  (let ((temp-file (concat *TEMP_FILE_STEM* ))) 
+    (with-temp-file temp-file
+      (insert content-string))
+    (chomp (shell-command-to-string (concat "openssl dgst -binary -sha1 " temp-file  "  | openssl enc -base64")))))
 
 (defun opscode-auth-headers (sig-str)
   (let* ((sig-len (length sig-str))
@@ -105,12 +106,14 @@
 
 (defun opscode-canonicalize-request (http-method canonical-path hashed-body canonical-time user-id)
   (interactive "MMethod: \nMCanonical Path: \nMHashed-body: \nMCanonical Time: \nMUser Id: \n")
-  (format "Method:%s\nHashed Path:%s\nX-Ops-Content-Hash:%s\nX-Ops-Timestamp:%s\nX-Ops-UserId:%s"
-          (upcase http-method) (opscode-hash-content canonical-path) hashed-body canonical-time user-id))
+  (let ((canonical-request  (format "Method:%s\nHashed Path:%s\nX-Ops-Content-Hash:%s\nX-Ops-Timestamp:%s\nX-Ops-UserId:%s"
+                                    (upcase http-method) (opscode-hash-content canonical-path) hashed-body canonical-time user-id) ))
+    (message canonical-request)
+    canonical-request))
 
 (defun opscode-sign-content (private-key-file content-string)
   (interactive "fPrivate Key: \nMContent: \n")
-  (shell-command-to-string (format "echo -n \"%s\" | openssl rsautl -sign -inkey %s | openssl enc -base64" content-string private-key-file) ))
+  (chomp (shell-command-to-string (format "echo -n \"%s\" | openssl rsautl -sign -inkey %s | openssl enc -base64" content-string private-key-file) )) )
 
 (defun opscode-sign-request (http-method path body canonical-time user-id private-key)
   (let* ((canonical-path (opscode-canonicalize-path path) )
