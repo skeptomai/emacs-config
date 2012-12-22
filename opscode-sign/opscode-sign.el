@@ -32,8 +32,8 @@
 (require 'sha1)
 (require 'base64)
 
-(defvar *SIGNING_DESCRIPTION* "algorithm=sha1;version=1.0")
-(defvar *CHEF_VERSION* "0.10.2")
+(defvar *SIGNING_DESCRIPTION* "algorithm=sha1;version=1.0;")
+(defvar *CHEF_VERSION* "10.16.2")
 (defvar *TEMP_FILE_STEM* "/tmp/opscode-emacs-sign-")
 
 (defcustom opscode-userid nil
@@ -93,7 +93,7 @@
   (interactive "MContent to hash: \n")
   (let ((temp-file (concat *TEMP_FILE_STEM* (insert content-string) ))) 
     (with-temp-file temp-file   
-      (shell-command-to-string "openssl dgst -binary -sha1 /tmp/opscode-emacs-sign | openssl enc -base64" ) )))
+      (shell-command-to-string (concat "openssl dgst -binary -sha1 " temp-file  "  | openssl enc -base64")))))
 
 (defun opscode-auth-headers (sig-str)
   (let* ((sig-len (length sig-str))
