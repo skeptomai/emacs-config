@@ -16,6 +16,8 @@
 ;; Don't bother me about the compile-command.  I trust you
 (setq safe-local-variable-values '(compile-command) )
 (setq enable-local-variables :safe)
+;; Also, make it default to debug, because I'm lazy like that
+(setq compile-command "make -k debug")
 
 ;; Generate inline-css so syntax-colored source code
 ;; is easier to cut-n-paste elsewhere
@@ -140,6 +142,10 @@
 ;; better buffer management
 (iswitchb-mode t)
 
+(autoload 'folding-mode          "folding" "Folding mode" t)
+(autoload 'turn-off-folding-mode "folding" "Folding mode" t)
+(autoload 'turn-on-folding-mode  "folding" "Folding mode" t)
+
 ;; Blink the cursor so it's easier for my old eyes to find
 (blink-cursor-mode)
 
@@ -217,7 +223,7 @@ directory, select directory. Lastly the file is opened."
     (or (eq window-system 'mac)
         (eq system-type 'darwin))
   (progn
-    (set-default-font "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;;    (set-default-font "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
     (setq w3m-command "/opt/local/bin/w3m")
     (setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)
                                         ("weitz" . w3m-browse-url)

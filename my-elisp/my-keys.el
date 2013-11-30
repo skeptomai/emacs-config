@@ -6,9 +6,8 @@
 ;;
 
 ;; (global-set-key "\C-xwf" 'confluence-get-page)
-(global-set-key "\M-," 'point-to-top)
+(global-set-key "\C-xg" 'magit-status)
 (global-set-key "\C-x," 'tags-loop-continue)
-(global-set-key "\M-." 'point-to-bottom)
 (global-set-key "\C-x\C-m" 'mark-defun)
 (global-set-key "\C-cm" 'execute-extended-command)
 (global-set-key "\C-x\M-m" 'manual-entry) 

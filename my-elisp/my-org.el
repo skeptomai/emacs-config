@@ -64,7 +64,7 @@
 
 (setq-default org-startup-indented t)
 
-(load-library "../org-contrib/org-export-generic.el")
+;; (load-library "../org-contrib/org-export-generic.el")
 
 (when (functionp 'org-set-generic-type)
   (org-set-generic-type
