@@ -13,6 +13,12 @@
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
+;; set up the package system
+(require 'package)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+(package-initialize)
+
 ;; Don't bother me about the compile-command.  I trust you
 (setq safe-local-variable-values '(compile-command) )
 (setq enable-local-variables :safe)
@@ -34,17 +40,17 @@
 (setq linum-format "%d  ")
 
 ;; Set paths on OS X the hard way, by reading /etc/paths and /etc/paths.d
-(defun read-lines (fpath) 
-  "Return a list of lines of a file at at FPATH." 
-  (with-temp-buffer 
-    (insert-file-contents fpath) 
-    (split-string (buffer-string) "\n" t)))
+;; (defun read-lines (fpath) 
+;;   "Return a list of lines of a file at at FPATH." 
+;;   (with-temp-buffer 
+;;     (insert-file-contents fpath) 
+;;     (split-string (buffer-string) "\n" t)))
 
-(setq exec-path (mapcan
-                 (lambda (x) (read-lines x))
-                 (cons "/etc/paths"  (find-lisp-find-files "/etc/paths.d" "\.*"))))
+;; (setq exec-path (mapcan
+;;                  (lambda (x) (read-lines x))
+;;                  (cons "/etc/paths"  (find-lisp-find-files "/etc/paths.d" "\.*"))))
 
-(setenv "PATH"  (mapconcat 'identity exec-path ":" ))
+;; (setenv "PATH"  (mapconcat 'identity exec-path ":" ))
 
 ;; I use aspell instead of ispell, installed with homebrew
 (setq-default ispell-program-name "aspell")
@@ -184,11 +190,11 @@ directory, select directory. Lastly the file is opened."
 (global-set-key (kbd "ESC ESC f") 'file-cache-ido-find-file)
 
 ;; Matching parentheses
-(autoload 'paredit-mode "paredit"
-  "Minor mode for pseudo-structurally editing Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
-(add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
-(add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
+;; (autoload 'paredit-mode "paredit"
+;;   "Minor mode for pseudo-structurally editing Lisp code." t)
+;; (add-hook 'emacs-lisp-mode-hook       (lambda () (paredit-mode +1)))
+;; (add-hook 'lisp-mode-hook             (lambda () (paredit-mode +1)))
+;; (add-hook 'lisp-interaction-mode-hook (lambda () (paredit-mode +1)))
 
 ;; Make lines wrap automagically in text mode
 (add-hook 'text-mode-hook 'text-mode-hook-identify)
