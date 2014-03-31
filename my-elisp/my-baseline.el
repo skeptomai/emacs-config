@@ -1,6 +1,10 @@
 (require 'cl)
 (require 'find-lisp)
 
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
 (setq org-export-latex-listings 'minted)
 (setq org-export-latex-custom-lang-environments
       '((emacs-lisp "common-lispcode")))
@@ -40,11 +44,11 @@
     (insert-file-contents fpath) 
     (split-string (buffer-string) "\n" t)))
 
-(setq exec-path (mapcan
-                 (lambda (x) (read-lines x))
-                 (cons "/etc/paths"  (find-lisp-find-files "/etc/paths.d" "\.*"))))
+;; (setq exec-path (mapcan
+;;                  (lambda (x) (read-lines x))
+;;                  (cons "/etc/paths"  (find-lisp-find-files "/etc/paths.d" "\.*"))))
 
-(setenv "PATH"  (mapconcat 'identity exec-path ":" ))
+;; (setenv "PATH"  (mapconcat 'identity exec-path ":" ))
 
 ;; I use aspell instead of ispell, installed with homebrew
 (setq-default ispell-program-name "aspell")
@@ -66,11 +70,7 @@
   t)
 
 (defun writeroom ()
-  (cond
-      ((fboundp 'aquamacs-toggle-full-frame)
-       (aquamacs-toggle-full-frame))
-      ((fboundp 'ns-toggle-fullscreen)
-       (ns-toggle-fullscreen)))
+  (toggle-frame-fullscreen)
   (modify-frame-parameters nil (list (cons 'fullscreen 'fullboth)))
   (set-window-margins nil 10 40)
   (set-frame-parameter (selected-frame) 'font "-apple-constantia-medium-i-normal--0-0-0-0-m-0-iso10646-1")

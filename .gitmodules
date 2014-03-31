@@ -13,3 +13,9 @@
 [submodule "erlware-mode"]
 	path = erlware-mode
 	url = git@github.com:skeptomai/erlware-mode.git
+[submodule "go-mode.el"]
+	path = go-mode.el
+	url = https://github.com/skeptomai/go-mode.el.git
+[submodule "goflymake"]
+	path = goflymake
+	url = https://github.com/skeptomai/goflymake.git
