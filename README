@@ -22,7 +22,7 @@
   (package-initialize))
 
 (let*
-    ((linux-home-dir "/home/vagrant")
+    ((linux-home-dir "/home/cb")
      (mac-home-dir (or (and (file-exists-p "/Users/cb") "/Users/cb") "/Users/cbrown"))
      (windows-home-dir "c:/home/cb")
      (homedir-by-system-type
