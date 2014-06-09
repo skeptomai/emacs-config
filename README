@@ -20,3 +20,19 @@
 (when
     (locate-library "package")
   (package-initialize))
+
+(let*
+    ((linux-home-dir "/home/vagrant")
+     (mac-home-dir (or (and (file-exists-p "/Users/cb") "/Users/cb") "/Users/cbrown"))
+     (windows-home-dir "c:/home/cb")
+     (homedir-by-system-type
+       (cond
+         ((or (eq system-type 'cygwin)
+              (eq system-type 'gnu/linux))
+          linux-home-dir)
+         ((eq system-type 'darwin)
+          mac-home-dir)
+         (t windows-home-dir))))
+  (defvar *home-path* (file-name-as-directory homedir-by-system-type))
+  (defvar *home-elisp-path* (concat *home-path* "Projects/emacs-config"))
+  (load-file (expand-file-name "subdirs.el" *home-elisp-path*)))
