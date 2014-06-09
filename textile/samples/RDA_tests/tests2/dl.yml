@@ -1,6 +1,0 @@
----
-in:  dl. Favorite color:blue\nFavorite pet:dog
-out: <dl>\n<dt>Favorite color</dt>\n<dd>blue</dd>\n<dt>Favorite pet</dt>\n<dd>dog</dd>\n</dl>
----
-in:  dl((((list#id)>.. Favorite color:blue\n\nFavorite pet:dog
-out: <dl style="padding-left:3em;float:right;" class="list right" id="id">\n<dt>Favorite color</dt>\n<dd>blue</dd>\n<dt>Favorite pet</dt>\n<dd>dog</dd>\n</dl>

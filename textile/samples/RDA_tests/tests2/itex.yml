@@ -1,3 +1,0 @@
----
-in:  \[ e^{i\pi} + 1 = 0 \]
-out: <math xmlns='http://www.w3.org/1998/Math/MathML' mode='display'>\n<msup><mi>e</mi> <mrow><mi>i</mi>\n<mi>&pi;</mi></mrow></msup>\n<mo>+</mo><mn>1</mn><mo>=</mo><mn>0</mn>\n</math>

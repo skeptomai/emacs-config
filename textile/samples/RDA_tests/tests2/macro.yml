@@ -1,9 +1,0 @@
----
-in:  This is the {C=} euro symbol.
-out: <p>This is the &#8364; euro symbol.</p>
----
-in:  This is the {umbrella} umbrella symbol.
-out: <p>This is the &#9730; umbrella symbol.</p>
----
-in:  This is the {<-} left arrow symbol.
-out: <p>This is the &#8592; left arrow symbol.</p>

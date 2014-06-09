@@ -17,31 +17,6 @@
   ;; If there is more than one, they won't work right.
  )
 
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
 (when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
+    (locate-library "package")
   (package-initialize))
-
-(let*
-    ((linux-home-dir "/home/cb")
-     (mac-home-dir (or (and (file-exists-p "/Users/cb") "/Users/cb") "/Users/cbrown"))
-     (windows-home-dir "c:/home/cb")
-     (homedir-by-system-type
-       (cond
-         ((or (eq system-type 'cygwin)
-              (eq system-type 'gnu/linux))
-          linux-home-dir)
-         ((eq system-type 'darwin)
-          mac-home-dir)
-         (t windows-home-dir))))
-  (defvar *home-path* (file-name-as-directory homedir-by-system-type))
-  (defvar *home-elisp-path* (concat *home-path* "Projects/emacs-config"))
-  (load-file (expand-file-name "subdirs.el" *home-elisp-path*)))
-
-;; You should just change the home directory and/or elisp paths above 
-;; and save this into your .emacs or Aquamacs Preferences.el on Mac OS X
