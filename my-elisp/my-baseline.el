@@ -63,16 +63,15 @@
 (display-time-mode)
 
 (defun unwriteroom ()
-  (cond 
-      ((fboundp 'aquamacs-toggle-full-frame)
-       (aquamacs-toggle-full-frame))
-      ((fboundp 'ns-toggle-fullscreen)
-       (ns-toggle-fullscreen)))
+  (interactive)
+  (toggle-frame-fullscreen)
+  (set-face-attribute 'default nil :family "Consolas")
   (modify-frame-parameters (selected-frame) `((alpha . 100)))
   (set-window-margins nil 0 0)
   t)
 
 (defun writeroom ()
+  (interactive)
   (toggle-frame-fullscreen)
   (modify-frame-parameters nil (list (cons 'fullscreen 'fullboth)))
   (set-window-margins nil 10 40)
@@ -139,7 +138,8 @@
 (icomplete-mode t)
 
 ;; better buffer management
-(iswitchb-mode t)
+;;(iswitchb-mode t)
+(ido-mode t)
 
 (autoload 'folding-mode          "folding" "Folding mode" t)
 (autoload 'turn-off-folding-mode "folding" "Folding mode" t)
@@ -222,6 +222,7 @@ directory, select directory. Lastly the file is opened."
     (or (eq window-system 'mac)
         (eq system-type 'darwin))
   (progn
+    (set-face-attribute 'default nil :family "Consolas")
 ;;    (set-default-font "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
     (setq w3m-command "/opt/local/bin/w3m")
     (setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)
@@ -234,9 +235,9 @@ directory, select directory. Lastly the file is opened."
 
 (server-start) ;; startup emacsclient support
 
-(ansi-term "bash" "localhost") ;; start a shell
+;; (ansi-term "bash" "localhost") ;; start a shell
 
-(switch-to-buffer "*scratch*") ;; don't want to be left in the term buffer
+;; (switch-to-buffer "*scratch*") ;; don't want to be left in the term buffer
 
 (type-break-mode) ;; get me to stop working once in a while
 
