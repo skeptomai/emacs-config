@@ -1,6 +1,0 @@
----
-in:  ==\nThis text is escaped.\n==
-out: This text is escaped.
----
-in:  ==\nThis text is escaped.\nThis is a second line.\n==
-out: This text is escaped.\nThis is a second line.

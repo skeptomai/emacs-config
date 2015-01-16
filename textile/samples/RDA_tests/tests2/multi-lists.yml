@@ -1,6 +1,0 @@
----
-in:  \# tres\n\#* quatro\n\#** cinco
-out: <ol>\n<li>tres\n<ul>\n<li>quatro\n<ul>\n<li>cinco</li>\n</ul>\n</li>\n</ul>\n</li>\n</ol>
----
-in:  \# um\n\#\# dois\n\# tres\n\#* quatro\n\#** cinco
-out: <ol>\n<li>um\n<ol>\n<li>dois</li>\n</ol>\n</li>\n<li>tres\n<ul>\n<li>quatro\n<ul>\n<li>cinco</li>\n</ul>\n</li>\n</ul>\n</li>\n</ol>

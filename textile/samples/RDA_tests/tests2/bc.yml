@@ -1,3 +1,0 @@
----
-in:  bc[python].. import opendap\n\nprint 1+1
-out: <pre>\n<code>\n<span class="py-src-keyword">import</span> <span class="py-src-variable">opendap</span><span class="py-src-newline"></span>\n<span class="py-src-nl">\n</span><span class="py-src-keyword">print</span> <span class="py-src-number">1</span><span class="py-src-op">+</span><span class="py-src-number">1</span>\n<span class="py-src-endmarker"></span>\n</code>\n</pre>

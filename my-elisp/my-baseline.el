@@ -5,6 +5,12 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
+;; set up the package system
+(require 'package)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+(package-initialize)
+
 (setq org-export-latex-listings 'minted)
 (setq org-export-latex-custom-lang-environments
       '((emacs-lisp "common-lispcode")))
@@ -16,12 +22,6 @@
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
-;; set up the package system
-(require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                          ("melpa" . "http://melpa.milkbox.net/packages/")))
-(package-initialize)
 
 ;; Don't bother me about the compile-command.  I trust you
 (setq safe-local-variable-values '(compile-command) )
@@ -59,9 +59,6 @@
 ;; I use aspell instead of ispell, installed with homebrew
 (setq-default ispell-program-name "aspell")
 
-;; Install color theme if it's here
-(load-theme 'deeper-blue t)
-
 ;; Add time to the info bar
 (display-time-mode)
 
@@ -89,13 +86,9 @@
    (writeroom)))
 
 ;; turn off prompting at exit
-(if (fboundp 'aquamacs-save-buffers-kill-emacs)
-    (defadvice aquamacs-save-buffers-kill-emacs (around no-query-kill-emacs activate)
-      "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-      (flet ((process-list ())) ad-do-it))
-    (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-      "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-      (flet ((process-list ())) ad-do-it)))
+(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+  (flet ((process-list ())) ad-do-it))
 
 ;; Check for {tool,menu,scroll}-bars and get rid of them
 ;; all this functionality is on the keyboard
