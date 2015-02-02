@@ -2,6 +2,21 @@
 (require 'remember)
 (require 'remember-autoloads)
 
+
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+
+(setq org-export-latex-listings 'minted)
+(setq org-export-latex-custom-lang-environments
+      '((emacs-lisp "common-lispcode")))
+(setq org-export-latex-minted-options
+      '(("frame" "lines")
+        ("fontsize" "\\scriptsize")
+        ("linenos" "")))
+(setq org-latex-to-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
 ;; typically don't need sub/super, but I do have underscores in variable names [cb]
 (setq org-export-with-sub-superscripts nil)
 ;; Don't include selected text in the link

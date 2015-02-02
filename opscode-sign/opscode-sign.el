@@ -82,6 +82,7 @@
         (delete-region (point-min) (point-max))))
 
 (defun opscode-canonicalize-time ()
+;  "2014-04-30T13:55:01Z")
    (format-time-string "%Y-%m-%dT%TZ")  )
 
 (defun opscode-canonicalize-path (path)
@@ -116,7 +117,14 @@
 
 (defun opscode-sign-content (private-key-file content-string)
   (interactive "fPrivate Key: \nMContent: \n")
-  (chomp (shell-command-to-string (format "echo -n \"%s\" | openssl rsautl -sign -inkey %s | openssl enc -base64" content-string private-key-file) )) )
+  (message (format "sign content: %s" content-string))
+  (let ((signed-content   
+         (chomp 
+          (shell-command-to-string 
+           (format "echo -n \"%s\" | openssl rsautl -sign -inkey %s | openssl enc -base64" 
+                   content-string private-key-file) )) ))
+    (message (format "signed content: %s" signed-content))
+    signed-content))
 
 (defun opscode-sign-request (http-method path body canonical-time user-id private-key)
   (let* ((canonical-path (opscode-canonicalize-path path) )

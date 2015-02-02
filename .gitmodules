@@ -4,6 +4,3 @@
 [submodule "go-mode.el"]
 	path = go-mode.el
 	url = https://github.com/skeptomai/go-mode.el.git
-[submodule "goflymake"]
-	path = goflymake
-	url = https://github.com/skeptomai/goflymake.git

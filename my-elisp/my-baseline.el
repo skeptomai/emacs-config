@@ -1,6 +1,9 @@
 (require 'cl)
 (require 'find-lisp)
 
+(setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
+(setq exec-path (append exec-path (list (expand-file-name "/usr/local/bin"))))
+
 ;; Check for {tool,menu,scroll}-bars and get rid of them
 ;; all this functionality is on the keyboard
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -15,18 +18,6 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
-
-(setq org-export-latex-listings 'minted)
-(setq org-export-latex-custom-lang-environments
-      '((emacs-lisp "common-lispcode")))
-(setq org-export-latex-minted-options
-      '(("frame" "lines")
-        ("fontsize" "\\scriptsize")
-        ("linenos" "")))
-(setq org-latex-to-pdf-process
-      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 ;; Don't bother me about the compile-command.  I trust you
 (setq safe-local-variable-values '(compile-command) )
@@ -201,9 +192,24 @@ directory, select directory. Lastly the file is opened."
       (setq github-user user)
       (setq github-token token))
 
+
+;; Set sensible defaults for my environment
+;; including browsing of hyperspec in emacs with w3m
+;; I've only got this set on the Mac for now 
+
+(defun add-default (p)
+  (add-to-list 'default-frame-alist p))
+
+(when 
+    (or (eq window-system 'mac)
+        (eq system-type 'darwin))
+  (progn
+    (set-face-attribute 'default nil :family "Consolas")
+    (set-terminal-coding-system 'utf-8-unix)))
+
 (server-start) ;; startup emacsclient support
 
-(type-break-mode) ;; get me to stop working once in a while
+;;(type-break-mode) ;; get me to stop working once in a while
 
 (fset 'yes-or-no-p 'y-or-n-p) ;; answer 'y' instead of 'yes'
 
