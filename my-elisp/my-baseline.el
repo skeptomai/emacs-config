@@ -1,14 +1,19 @@
 (require 'cl)
 (require 'find-lisp)
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+;; Check for {tool,menu,scroll}-bars and get rid of them
+;; all this functionality is on the keyboard
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(when (fboundp 'show-paren-mode) (show-paren-mode t))
+(when (fboundp 'tabbar-mode) (tabbar-mode nil))
 
 ;; set up the package system
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 
 (setq org-export-latex-listings 'minted)
@@ -90,14 +95,6 @@
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
 
-;; Check for {tool,menu,scroll}-bars and get rid of them
-;; all this functionality is on the keyboard
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(when (fboundp 'show-paren-mode) (show-paren-mode t))
-(when (fboundp 'tabbar-mode) (tabbar-mode nil))
-
 ;; Syntax colouring, show line and column numbers in status bar
 (setq-default fill-column 92)
 (setq-default global-font-lock-mode t)
@@ -133,13 +130,6 @@
 ;; better navigation
 (ido-mode t)
 (setq ido-enable-flex-matching t)
-
-;; Command completion in the mini-buffer
-(icomplete-mode t)
-
-;; better buffer management
-;;(iswitchb-mode t)
-(ido-mode t)
 
 (autoload 'folding-mode          "folding" "Folding mode" t)
 (autoload 'turn-off-folding-mode "folding" "Folding mode" t)
@@ -211,33 +201,7 @@ directory, select directory. Lastly the file is opened."
       (setq github-user user)
       (setq github-token token))
 
-;; Set sensible defaults for my environment
-;; including browsing of hyperspec in emacs with w3m
-;; I've only got this set on the Mac for now 
-
-(defun add-default (p)
-  (add-to-list 'default-frame-alist p))
-
-(when 
-    (or (eq window-system 'mac)
-        (eq system-type 'darwin))
-  (progn
-    (set-face-attribute 'default nil :family "Consolas")
-;;    (set-default-font "-apple-Bitstream_Vera_Sans_Mono-medium-normal-normal-*-*-*-*-*-m-0-iso10646-1")
-    (setq w3m-command "/opt/local/bin/w3m")
-    (setq browse-url-browser-function '(("hyperspec" . w3m-browse-url)
-                                        ("weitz" . w3m-browse-url)
-                                        ("." . browse-url-default-macosx-browser)))
-;;                                        ("." . w3m-browse-url)))
-    (set-terminal-coding-system 'utf-8-unix)
-    (add-default (cons 'width 82))
-    (add-default (cons 'height 48))))
-
 (server-start) ;; startup emacsclient support
-
-;; (ansi-term "bash" "localhost") ;; start a shell
-
-;; (switch-to-buffer "*scratch*") ;; don't want to be left in the term buffer
 
 (type-break-mode) ;; get me to stop working once in a while
 
