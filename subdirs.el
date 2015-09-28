@@ -1,6 +1,6 @@
 (let* ((init-path (concat *home-elisp-path* "/my-elisp"))
        (my-elisps 
-        '("baseline" "go-mode.el" "ruby" "haml" "keys" "fns" "erc" "org" "bm" "dash-at-point"))
+        '("baseline" "scala" "go-mode.el" "ruby" "haml" "keys" "fns" "erc" "org" "bm" "dash-at-point" "markdown"))
        (default-directory *home-elisp-path*))
   (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
       (normal-top-level-add-subdirs-to-load-path))
