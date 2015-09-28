@@ -8,4 +8,5 @@
 (require 'go-flycheck)
 (require 'go-autocomplete)
 (require 'auto-complete-config)
+(yas-global-mode 1)
 (ac-config-default)
