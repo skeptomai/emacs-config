@@ -6,3 +6,6 @@
 (require 'go-mode-load)
 (require 'go-flymake)
 (require 'go-flycheck)
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(ac-config-default)
