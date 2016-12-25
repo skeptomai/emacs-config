@@ -1,5 +1,3 @@
-(setenv "GOPATH" "/home/cb/Projects/gopath")
-(setenv "GOROOT" "/usr/local/go")
 (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name (concat (getenv "GOROOT") "/bin"))))
 (add-to-list 'load-path (expand-file-name (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake" )))
 (setq exec-path (append exec-path (list (expand-file-name (concat (getenv "GOPATH") "/bin")))))
@@ -7,8 +5,6 @@
 
 (add-hook 'before-save-hook #'gofmt-before-save)
 (require 'go-mode-load)
-; (require 'go-flymake)
-(require 'go-flycheck)
 (require 'go-autocomplete)
 (require 'auto-complete-config)
 (electric-pair-mode 1)

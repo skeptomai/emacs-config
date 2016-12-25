@@ -21,6 +21,6 @@
                       "/Users/cbrown" 
                       "/Users/skeptomai" 
                       "/home/skeptomai" 
-                      "c:/home/cb"))))
-(defvar *home-elisp-path* (concat *home-path* "Projects/emacs-config"))
+                      "c:/Users/skept/Projects"))))
+(defvar *home-elisp-path* (concat *home-path* "/emacs-config"))
 (load-file (expand-file-name "subdirs.el" *home-elisp-path*))

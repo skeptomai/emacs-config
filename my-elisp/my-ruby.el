@@ -1,4 +1,3 @@
-
 (autoload 'ruby-mode "ruby-mode" "ruby mode" t)
 
 (add-to-list 'auto-mode-alist
@@ -18,15 +17,13 @@
 (add-to-list 'interpreter-mode-alist
       '("ruby" . ruby-mode))
 
-(autoload 'run-ruby "inf-ruby"
-  "Run an inferior Ruby process")
-(autoload 'inf-ruby-keys "inf-ruby")
+(autoload 'inf-ruby "inf-ruby" "Run an inferior Ruby process" t)
+(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
 (autoload 'rubydb "rubydb3x" "Ruby Debugger" t)
 
 (add-hook 'ruby-mode-hook
           '(lambda ()
             (progn
-             (inf-ruby-keys)
              (define-key ruby-mode-map "\C-m" 'reindent-then-newline-and-indent)
              (require 'ruby-electric)
              (ruby-electric-mode))))

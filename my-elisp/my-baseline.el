@@ -13,14 +13,15 @@
 (when (fboundp 'tabbar-mode) (tabbar-mode nil))
 
 ;; set up the package system
-(require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/"))))
 (package-initialize)
-(require 'desktop+)
+;;(require 'desktop+)
 
 (global-flycheck-mode)
+(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 
 ;; Don't bother me about the compile-command.  I trust you
 (setq safe-local-variable-values '(compile-command) )
@@ -65,7 +66,7 @@
   (interactive)
   (toggle-frame-fullscreen)
   (set-face-attribute 'default nil :family "Consolas")
-  (modify-frame-parameters (selected-frame) `((alpha . 100)))
+  (modify-frame-parameters (selected-frame) '((alpha . 100)))
   (set-window-margins nil 0 0)
   t)
 
@@ -74,8 +75,8 @@
   (toggle-frame-fullscreen)
   (modify-frame-parameters nil (list (cons 'fullscreen 'fullboth)))
   (set-window-margins nil 10 40)
-  (set-frame-parameter (selected-frame) 'font "-apple-constantia-medium-i-normal--0-0-0-0-m-0-iso10646-1")
-  (modify-frame-parameters (selected-frame) `((alpha . 65)))
+;;  (set-frame-parameter (selected-frame) 'font "-apple-constantia-medium-i-normal--0-0-0-0-m-0-iso10646-1")
+  (modify-frame-parameters (selected-frame) '((alpha 85 50)))
   t)
 
 (defun toggle-writeroom ()
@@ -205,7 +206,8 @@ directory, select directory. Lastly the file is opened."
 
 (when 
     (or (eq window-system 'mac)
-        (eq system-type 'darwin))
+        (eq system-type 'darwin)
+	(eq system-type 'windows-nt))
   (progn
     (set-face-attribute 'default nil :family "Consolas")
     (set-terminal-coding-system 'utf-8-unix)))

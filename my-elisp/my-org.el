@@ -1,6 +1,6 @@
 ;; Remember integration
 (require 'remember)
-(require 'remember-autoloads)
+;;(require 'remember-autoloads)
 
 
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
