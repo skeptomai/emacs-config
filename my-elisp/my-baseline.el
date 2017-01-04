@@ -205,9 +205,7 @@ directory, select directory. Lastly the file is opened."
   (add-to-list 'default-frame-alist p))
 
 (when 
-    (or (eq window-system 'mac)
-        (eq system-type 'darwin)
-	(eq system-type 'windows-nt))
+	(eq system-type 'windows-nt)
   (progn
     (set-face-attribute 'default nil :family "Consolas")
     (set-terminal-coding-system 'utf-8-unix)))
