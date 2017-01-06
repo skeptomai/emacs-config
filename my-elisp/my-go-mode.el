@@ -1,7 +1,7 @@
-(setenv "GOPATH" "/home/cb/Projects/gopath")
+(setenv "GOPATH" (expand-file-name (concat (getenv "HOME") "/Projects/gopath")))
 (setenv "GOROOT" "/usr/local/go")
 (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name (concat (getenv "GOROOT") "/bin"))))
-(add-to-list 'load-path (expand-file-name (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake" )))
+(add-to-list 'load-path (expand-file-name (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake")))
 (setq exec-path (append exec-path (list (expand-file-name (concat (getenv "GOPATH") "/bin")))))
 (setq exec-path (append exec-path (list (expand-file-name (concat (getenv "GOROOT") "/bin")))))
 

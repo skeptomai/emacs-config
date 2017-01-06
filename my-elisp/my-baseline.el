@@ -1,9 +1,6 @@
 (require 'cl)
 (require 'find-lisp)
 
-;(setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin"))
-;(setq exec-path (append exec-path (list (expand-file-name "/usr/local/bin"))))
-
 ;; Check for {tool,menu,scroll}-bars and get rid of them
 ;; all this functionality is on the keyboard
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -14,10 +11,14 @@
 
 ;; set up the package system
 (require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("melpa-stable" . "http://stable.melpa.org/packages/")))
 (package-initialize)
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
 (require 'desktop+)
 
 (global-flycheck-mode)
@@ -220,4 +221,4 @@ directory, select directory. Lastly the file is opened."
 (put 'narrow-to-region 'disabled nil)
 
 ;; I have gpg installed here, and epa/epg are available
-(when (boundp 'epg-gpg-program) (setq epg-gpg-program "/usr/local/bin/gpg"))
+(when (boundp 'epg-gpg-program) (setq epg-gpg-program "/usr/bin/gpg"))
